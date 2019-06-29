@@ -357,9 +357,9 @@ ul {
 }
 @font-face {
 	font-family: "Andada";
-	src:	local("Andada"),
-			local("Andada ht"),
-			local("Andada ht Pro"),
+	src:	local("Andada Italic"),
+			local("Andada ht Italic"),
+			local("Andada ht Pro Italic"),
 			url("fonts/Andada-Italic.otf") format("opentype");
 	font-style: italic;
 }
