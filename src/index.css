@@ -355,6 +355,21 @@ ul {
 			local("Andada ht Pro"),
 			url("fonts/Andada-Regular.otf") format("opentype");
 }
+@font-face {
+	font-family: "Andada";
+	src:	local("Andada"),
+			local("Andada ht"),
+			local("Andada ht Pro"),
+			url("fonts/Andada-Italic.otf") format("opentype");
+	font-style: italic;
+}
+@font-face {
+	font-family: "Andada SC";
+	src:	local("Andada SC"),
+			local("Andada ht SC"),
+			local("Andada ht Pro SC"),
+			url("fonts/AndadaSC-Regular.otf") format("opentype");
+}
 
 body {
 
