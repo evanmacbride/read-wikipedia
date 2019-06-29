@@ -340,7 +340,7 @@ template {
   display: none;
 }
 
-* PERSONAL TEMPLATE STYLES */
+/* PERSONAL TEMPLATE STYLES */
 ul {
 	list-style-type: none;
 	padding-left: 0;
@@ -348,6 +348,14 @@ ul {
 
 
 /* PROJECT STYLES */
+@font-face {
+	font-family: "Andada";
+	src:	local("Andada"),
+			local("Andada ht"),
+			local("Andada ht Pro"),
+			url("fonts/Andada-Regular.otf") format("opentype");
+}
+
 body {
 
 	background-color: #FFFDFC;
