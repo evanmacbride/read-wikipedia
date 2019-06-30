@@ -37,7 +37,7 @@ class App extends React.Component {
 			.then(response => {
 				//console.log(Object.values(response.query.pages)[0].extract);
 				let responseText = Object.values(response.query.pages)[0].extract;
-				responseText = responseText.replace(/([a-z0-9])\.([A-Z0-9])/g,'$1\n$2');
+				responseText = responseText.replace(/([a-z0-9])\.([A-Z])/g,'$1\n$2');
 				// Process the text.
 				
 				// Use booleans to apply appropriate classes to set margins
