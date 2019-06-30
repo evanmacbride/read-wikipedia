@@ -369,8 +369,8 @@ ul {
 }
 
 body {
-
-	background-color: #FFFDFC;
+	background-color: #FCF9EE;
+	color: #39323E;
 }
 
 img {
@@ -421,7 +421,6 @@ p {
 }
 
 .pageText {
-	color: #040406;
     font-feature-settings: 'onum';
 	font-family: 'Andada', serif;
 	font-size: 1rem;

@@ -35,7 +35,6 @@ class App extends React.Component {
 			this.state.query + "&format=json&explaintext=")
 			.then(response => response.json())
 			.then(response => {
-				//console.log(Object.values(response.query.pages)[0].extract);
 				let responseText = Object.values(response.query.pages)[0].extract;
 				responseText = responseText.replace(/([a-z0-9])\.([A-Z])/g,'$1\n$2');
 				// Process the text.
@@ -58,7 +57,6 @@ class App extends React.Component {
 					"== REFERENCES ==",	"== EXTERNAL LINKS ==", "== SEE ALSO =="];
 				const breakPoints = [];
 				
-				//let textArray = Object.values(response.query.pages)[0].extract.split(/[\r\n]+/)
 				let textArray = responseText.split(/[\r\n]+/).map((text, index) => {
 						
 						// Ignore text that's all whitespace.
