@@ -35,7 +35,9 @@ class App extends React.Component {
 			this.state.query + "&format=json&explaintext=")
 			.then(response => response.json())
 			.then(response => {
-				console.log(Object.values(response.query.pages)[0].extract);
+				//console.log(Object.values(response.query.pages)[0].extract);
+				let responseText = Object.values(response.query.pages)[0].extract;
+				responseText.replace(/([a-z0-9])\.([A-Z0-9])/g,'$1\n$2');
 				// Process the text.
 				
 				// Use booleans to apply appropriate classes to set margins
@@ -56,8 +58,8 @@ class App extends React.Component {
 					"== REFERENCES ==",	"== EXTERNAL LINKS ==", "== SEE ALSO =="];
 				const breakPoints = [];
 				
-				let pArray = Object.values(response.query.pages)[0].extract.split(/[\r\n]+/)
-					.map((text, index) => {
+				//let textArray = Object.values(response.query.pages)[0].extract.split(/[\r\n]+/)
+				let textArray = responseText.split(/[\r\n]+/).map((text, index) => {
 						
 						// Ignore text that's all whitespace.
 						text = text.trim();
@@ -121,14 +123,14 @@ class App extends React.Component {
 					});
 					
 				// Remove text after first breakpoint
-				pArray = pArray.slice(0, breakPoints[0]);
+				textArray = textArray.slice(0, breakPoints[0]);
 				
 				// Go back and remove headers for empty sections.
 				for (let i = 0; i < deleteList.length; i++) {
-					pArray.splice(deleteList[i], 1);
+					textArray.splice(deleteList[i], 1);
 				}
 				this.setState({
-					pageText: pArray
+					pageText: textArray
 				})
 
 			});
