@@ -370,11 +370,14 @@ ul {
 
 body {
 	background-color: #FCF9EE;
-	color: #39323E;
+	/*color: #39323E;*/
+	color: #1e1d1e;
 }
 
-img {
-	width: 100%;
+main {
+	display: flex;
+	flex-flow: column wrap;
+	align-items: center;
 }
 
 h1, h2, h3, h4 {
