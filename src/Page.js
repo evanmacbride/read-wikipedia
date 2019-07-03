@@ -136,7 +136,7 @@ function Page(props) {
 	return (
 		<main>
 			<article className="pageText">
-				<h1>{props.title}</h1>
+				<h1 className="pageTitle">{props.title}</h1>
 				{props.pageText}
 			</article>
 		</main>	

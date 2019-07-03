@@ -18,8 +18,8 @@ class Header extends React.Component {
 	
 	render() {
 		return (
-			<header>
-				<h1>Read Wikipedia</h1>
+			<header className="banner">
+				<h1><abbr title="Read Wikipedia">RWP</abbr></h1>
 				<form onSubmit={this.handleSubmit}>
 					<input onChange={this.handleChange} />
 					<button>Search</button>

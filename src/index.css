@@ -369,9 +369,14 @@ ul {
 }
 
 body {
-	background-color: #FCF9EE;
+	/*background-color: #FCF9EE;*/
+	background-color: #fbf9f3;
 	/*color: #39323E;*/
 	color: #1e1d1e;
+	font-family: 'Andada', 'Times', 'Georgia', serif;
+	font-size: 1rem;
+	line-height: 1.25;
+	text-rendering: optimizeLegibility;
 }
 
 main {
@@ -386,14 +391,8 @@ h1, h2, h3, h4 {
 	line-height: 1.25;
 }
 
-h1 {
-	letter-spacing: 0.265rem;
-	margin: 2.3125rem 0 1.4375rem 0;
-	text-align: center;
-	text-transform: uppercase;
-}
-
-h2 {
+h1, h2 {
+	font-family: 'Jost*';
 	letter-spacing: 0.13rem;
 	margin: 2.3125rem 0 1.4375rem 0;
 	text-transform: uppercase;
@@ -410,13 +409,55 @@ h4 {
 	text-transform: lowercase;
 }
 
-.beneathP {
-	margin-top: -0.4774rem;
-}
-
 p {
 	margin-bottom: 1.25rem;
 	margin-top: 0;
+}
+
+abbr {
+	text-decoration: none !important;
+}
+
+button, input {
+	line-height: initial;
+	border: none;
+	border-radius: 1rem;
+}
+
+input {
+	background-color: #fefdfb;
+	padding: 0 0.375rem;
+}
+
+button {
+	background-color: #3f8118;
+	color: #fbf9f3;
+	margin-left: 0.25rem;
+}
+
+.banner {
+	align-items: center;
+	background-color: #d2eac5;
+	display: flex;
+	flex-flow: row wrap;
+	font-family: 'Jost*';
+	justify-content: space-between;
+	padding: 0 4vw 0 4vw;
+}
+
+.banner h1 {
+	margin: 0.67rem;
+}
+
+.pageTitle {
+	/*letter-spacing: 0.265rem;
+	margin: 2.3125rem 0 1.4375rem 0;*/
+	text-align: center;
+	/*text-transform: uppercase;*/
+}
+
+.beneathP {
+	margin-top: -0.4774rem;
 }
 
 .beneathH3 {
@@ -425,12 +466,8 @@ p {
 
 .pageText {
     font-feature-settings: 'onum';
-	font-family: 'Andada', serif;
-	font-size: 1rem;
-	line-height: 1.25;
 	margin: 0 4vw 0 4vw;
 	max-width: 450px;
-	text-rendering: optimizeLegibility;
 }
 
 /* PRINT STYLES */

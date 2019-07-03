@@ -43,7 +43,7 @@ class App extends React.Component {
 		//this.setState({query: query});
 		console.log(this.state.query);
 		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&titles=" + 
-			this.state.query + "&format=json&redirects=&explaintext=")
+			this.state.query + "&format=json&redirects&explaintext")
 			.then(response => response.json())
 			.then(response => {
 				// Get the title
