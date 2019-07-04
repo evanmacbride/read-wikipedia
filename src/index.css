@@ -367,6 +367,11 @@ ul {
 			local("Andada ht Pro SC"),
 			url("fonts/AndadaSC-Regular.otf") format("opentype");
 }
+@font-face {
+	font-family: "Jost*";
+	src:	local("Jost*"),
+			url("fonts/Jost-400-Book.otf") format("opentype");
+}
 
 body {
 	/*background-color: #FCF9EE;*/
@@ -392,7 +397,7 @@ h1, h2, h3, h4 {
 }
 
 h1, h2 {
-	font-family: 'Jost*';
+	font-family: 'Jost*','Futura',sans-serif;
 	letter-spacing: 0.13rem;
 	margin: 2.3125rem 0 1.4375rem 0;
 	text-transform: uppercase;
@@ -414,10 +419,6 @@ p {
 	margin-top: 0;
 }
 
-abbr {
-	text-decoration: none !important;
-}
-
 button, input {
 	line-height: initial;
 	border: none;
@@ -426,32 +427,39 @@ button, input {
 
 input {
 	background-color: #fefdfb;
+	/*box-shadow: 0 1px 2px rgba(198,195,196,0.85) inset, 
+		0 2px 4px rgba(198,195,196,0.65) inset;*/
+	height: 1.625rem;
+	max-width: 66%;
 	padding: 0 0.375rem;
 }
 
 button {
 	background-color: #3f8118;
 	color: #fbf9f3;
+	cursor: pointer;
 	margin-left: 0.25rem;
 }
 
 .banner {
 	align-items: center;
 	background-color: #d2eac5;
+    box-shadow: 0 2px 4px rgba(198,195,196,1), 0 6px 16px rgba(198,195,196,0.8);
 	display: flex;
 	flex-flow: row wrap;
 	font-family: 'Jost*';
 	justify-content: space-between;
-	padding: 0 4vw 0 4vw;
+	padding: 0.5rem 4vw 0.5rem 4vw;
 }
 
 .banner h1 {
-	margin: 0.67rem;
+	color: #21440d;
+	margin: 0;
 }
 
 .pageTitle {
-	/*letter-spacing: 0.265rem;
-	margin: 2.3125rem 0 1.4375rem 0;*/
+	/*letter-spacing: 0.265rem;*/
+	margin: calc(2.3125rem + 14px) 0 1.4375rem 0;
 	text-align: center;
 	/*text-transform: uppercase;*/
 }
