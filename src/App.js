@@ -50,9 +50,16 @@ class App extends React.Component {
 				this.setState({title: Object.values(response.query.pages)[0].title});
 				// Process the text.
 				
-				// Restore newlines lost by ignoring footnotes.
+				// Restore newlines lost by ignoring footnotes. (Insert a
+				// newline into elisions between lowercase letters, a period,
+				// and an uppercase letter.)
 				let responseText = Object.values(response.query.pages)[0].extract;
-				responseText = responseText.replace(/([a-z0-9])\.([A-Z])/g,'$1\n$2');
+				responseText = responseText.replace(/([a-z0-9]\p{Ll}?"?\)?"?\.)([A-Z])/ug,'$1\n$2');
+				
+				// Remove pronunciation guides
+				responseText = responseText.replace(/ \( ?[A-Z].*:.*\)/g, '');
+				responseText = responseText.replace(/ \(.*listen.*\)/g, '');
+				responseText = responseText.replace(/ \( ?\)/g, '');
 				
 				
 				// Use booleans to apply appropriate classes to set margins
@@ -70,7 +77,8 @@ class App extends React.Component {
 				// Use breaklist to catch header text that indicates the main
 				// text has ended.
 				const breakList = ["== GALLERY ==", "== NOTES ==", 
-					"== REFERENCES ==",	"== EXTERNAL LINKS ==", "== SEE ALSO =="];
+					"== REFERENCES ==",	"== EXTERNAL LINKS ==", "== SEE ALSO ==",
+					"== SELECTED BIBLIOGRAPHY =="];
 				const breakPoints = [];
 				
 				let textArray = responseText.split(/[\r\n]+/).map((text, index) => {
