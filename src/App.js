@@ -41,7 +41,7 @@ class App extends React.Component {
 	
 	handleFormSubmit() {
 		//this.setState({query: query});
-		console.log(this.state.query);
+		//console.log(this.state.query);
 		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&titles=" + 
 			this.state.query + "&format=json&redirects&explaintext")
 			.then(response => response.json())
@@ -54,7 +54,8 @@ class App extends React.Component {
 				// newline into elisions between lowercase letters, a period,
 				// and an uppercase letter.)
 				let responseText = Object.values(response.query.pages)[0].extract;
-				responseText = responseText.replace(/([a-z0-9]\p{Ll}?"?\)?"?\.)([A-Z])/ug,'$1\n$2');
+				//responseText = responseText.replace(/([a-z0-9]\p{Ll}?"?\)?"?\.)([A-Z])/ug,'$1\n$2');
+				responseText = responseText.replace(/(\S"?'?\)?\."?\)?)(\(?'?"?[A-Z][^.])/g,'$1\n$2');
 				// Catch paragraphs ending in a quote
 				responseText = responseText.replace(/('?\.")([A-Z])/g,'$1\n$2');
 				
@@ -156,7 +157,7 @@ class App extends React.Component {
 				this.setState({
 					pageText: textArray
 				})
-				console.log(this.state.pageText);
+				//console.log(this.state.pageText);
 			}
 		);
 	}
