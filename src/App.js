@@ -55,6 +55,8 @@ class App extends React.Component {
 				// and an uppercase letter.)
 				let responseText = Object.values(response.query.pages)[0].extract;
 				responseText = responseText.replace(/([a-z0-9]\p{Ll}?"?\)?"?\.)([A-Z])/ug,'$1\n$2');
+				// Catch paragraphs ending in a quote
+				responseText = responseText.replace(/('?\.")([A-Z])/g,'$1\n$2');
 				
 				// Remove pronunciation guides
 				responseText = responseText.replace(/ \( ?[A-Z].*:.*\)/g, '');

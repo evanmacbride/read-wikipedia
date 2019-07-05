@@ -438,6 +438,7 @@ button {
 	background-color: #3f8118;
 	color: #fbf9f3;
 	cursor: pointer;
+	height: 1.625rem;
 	margin-left: 0.25rem;
 }
 
@@ -453,7 +454,10 @@ button {
 }
 
 .banner h1 {
-	color: #21440d;
+	/*color: #21440d;*/
+	color: black;
+	font-size: 0.6875rem;
+	line-height: 0.9;
 	margin: 0;
 }
 
