@@ -390,7 +390,7 @@ main {
 	align-items: center;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
 	font-size: 1rem;
 	font-weight: normal;
 	line-height: 1.25;
@@ -408,7 +408,7 @@ h3 {
 	margin: 1.25rem 0 0 0;
 }
 
-h4 {
+h4, h5 {
 	font-family: 'Andada SC';
 	margin: 0.7726rem 0 0.4774rem 0;
 	text-transform: lowercase;

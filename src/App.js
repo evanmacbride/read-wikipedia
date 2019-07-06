@@ -41,11 +41,25 @@ class App extends React.Component {
 	
 	handleFormSubmit() {
 		//this.setState({query: query});
-		//console.log(this.state.query);
 		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&titles=" + 
 			this.state.query + "&format=json&redirects&explaintext")
 			.then(response => response.json())
+			.catch(err => {
+				/*this.setState(
+					{title: "SEARCH FAILED",
+					pageText: err});*/
+				console.log(err);
+				return Promise.reject(err);
+			})
 			.then(response => {
+				if (Object.values(response.query.pages)[0].hasOwnProperty("missing")) {
+					this.setState(
+						{title: "PAGE NOT FOUND",
+						pageText: "Your search for '" + this.state.query +
+							"' yielded zero results. Please try again."});
+					return;
+				}
+				
 				// Get the title
 				this.setState({title: Object.values(response.query.pages)[0].title});
 				// Process the text.
@@ -54,6 +68,9 @@ class App extends React.Component {
 				// newline into elisions between lowercase letters, a period,
 				// and an uppercase letter.)
 				let responseText = Object.values(response.query.pages)[0].extract;
+				
+				responseText = responseText.replace(/ {2,}/g, ' ');
+				
 				//responseText = responseText.replace(/([a-z0-9]\p{Ll}?"?\)?"?\.)([A-Z])/ug,'$1\n$2');
 				responseText = responseText.replace(/(\S"?'?\)?\."?\)?)(\(?'?"?[A-Z][^.])/g,'$1\n$2');
 				// Catch paragraphs ending in a quote
@@ -62,8 +79,11 @@ class App extends React.Component {
 				// Remove pronunciation guides
 				responseText = responseText.replace(/ \( ?[A-Z].*:.*\)/g, '');
 				responseText = responseText.replace(/ \(.*listen.*\)/g, '');
-				responseText = responseText.replace(/ \( ?\)/g, '');
+				responseText = responseText.replace(/ \( +\S+ +\)/g, '');
 				
+				// Remove artifacts from code examples
+				responseText = responseText.replace(/^ *\{.*displaystyle.*\} *$/g, '');
+				//responseText = responseText.replace(/(\r\n|\r|\n) *\pL$/ug, '');
 				
 				// Use booleans to apply appropriate classes to set margins
 				// to keep the baseline grid before and after h 
@@ -84,15 +104,37 @@ class App extends React.Component {
 					"== SELECTED BIBLIOGRAPHY =="];
 				const breakPoints = [];
 				
-				let textArray = responseText.split(/[\r\n]+/).map((text, index) => {
-					
-					// Ignore text that's all whitespace.
+				//let textArray = responseText.split(/[\r\n]+/).map((text, index) => {
+				let textArray = responseText.split(/[\r\n|\r|\n]+/).map((text, index) => {	
+					// Ignore text that's all whitespace or a single character or word.
 					text = text.trim();
 					if (breakList.indexOf(text.toUpperCase()) > -1) {
 						breakPoints.push(index);
 					}
-					if (text === "") {
+					if (!text.includes(" ")) {
 						return null;
+					}
+					else if (text.includes("=====")) {
+						
+						// Catch identical adjacent h tags
+						if (lastTag === "h5") {
+							deleteList.push(index - 1);
+						}
+						lastTag = "h5";
+						
+						// Remove old formatting and apply new h tag
+						const find = "=====";
+						const re = new RegExp(find, 'g');
+						text = text.replace(re, '').trim();
+						
+						// Apply appropriate class for proper 
+						// baseline alignment
+						beneathH3 = false;
+						if (beneathP) {
+							beneathP = false;
+							return <h5 className="beneathP" key={index}>{text}</h5>;
+						}
+						return <h5 key={index}>{text}</h5>;
 					}
 					else if (text.includes("====")) {
 						
@@ -157,8 +199,14 @@ class App extends React.Component {
 				this.setState({
 					pageText: textArray
 				})
-				//console.log(this.state.pageText);
 			}
+		)
+		.catch(err => {
+			console.log(err);
+			this.setState(
+				{title: "SEARCH FAILED",
+				pageText: "Could not contact the Wikipedia API. Please check your internet connection and try again."});	
+		}
 		);
 	}
 	
