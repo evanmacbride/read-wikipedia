@@ -1,6 +1,7 @@
 import React from "react"
 import Page from "./Page"
 import Header from "./Header"
+import SearchResults from "./SearchResults"
 
 // Find the asset that includes the query name in its title. If no
 // asset contains the query name, return the first one in the array.
@@ -19,19 +20,13 @@ class App extends React.Component {
 		this.state = {
 			pageText: null,
 			query: null,
-			title: null
+			title: null,
+			results: null
 		};
 		this.handleFormChange = this.handleFormChange.bind(this);
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
 		
 	}
-	
-	/*handleFormSubmit(event) {
-		event.preventDefault();
-		this.setState({
-			query: event.target.value
-		});
-	}*/
 	
 	handleFormChange(text) {
 		this.setState({
@@ -39,22 +34,23 @@ class App extends React.Component {
 		});		
 	}
 	
+	// TODO: Remove code examples and elide the p tags they separate. Only
+	// fetch page after user clicks the associated page card.
+	
+	// Redirect to first page with title that matches query. CHANGE TO 
+	// handleCardClick(). PASS TO SEARCHRESULTS.
 	handleFormSubmit() {
-		//this.setState({query: query});
 		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&titles=" + 
 			this.state.query + "&format=json&redirects&explaintext")
 			.then(response => response.json())
 			.catch(err => {
-				/*this.setState(
-					{title: "SEARCH FAILED",
-					pageText: err});*/
 				console.log(err);
 				return Promise.reject(err);
 			})
 			.then(response => {
 				if (Object.values(response.query.pages)[0].hasOwnProperty("missing")) {
 					this.setState(
-						{title: "PAGE NOT FOUND",
+						{title: "Search Failed",
 						pageText: "Your search for '" + this.state.query +
 							"' yielded zero results. Please try again."});
 					return;
@@ -210,12 +206,57 @@ class App extends React.Component {
 		);
 	}
 	
+	// Return srlimit pages that match query
+	handleFormSubmit() {
+		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query" + 
+			"&format=json&list=search&srsearch=" + this.state.query + 
+			"&srprop=snippet&srlimit=20")
+			.then(response => response.json())
+			.catch(err => {
+				console.log(err);
+				return Promise.reject(err);
+			})
+			.then(response => {
+				if (response.query.searchinfo.totalhits === 0) {
+					this.setState(
+						{title: "Search Failed",
+						pageText: "Your search for '" + this.state.query +
+							"' yielded zero results. Please try again."});
+					return;
+				}
+				const searchResults = response.query.search.map((result,index) => {
+					const cardTitle = result.title;
+					console.log(result.snippet);
+					const cardSnippet = result.snippet.replace(
+						/<span class="searchmatch">|<\/span>|&quot;| \(listen\)/g, '') + "...";
+					return (
+						<div className="resultCard" key={index}>
+							<h2>{cardTitle}</h2>
+							<p>{cardSnippet}</p>
+						</div>
+					)
+				});
+				this.setState({results: searchResults});
+			}
+		)
+		.catch(err => {
+			console.log(err);
+			this.setState(
+				{title: "Search Failed",
+				pageText: "Could not contact the Wikipedia API. Please check your internet connection and try again."});	
+		}
+		);
+	}
+	
 	render() {
 		return (
 			<div>
 				<Header 
 					onFormChange={this.handleFormChange}
 					onFormSubmit={this.handleFormSubmit}
+				/>
+				<SearchResults
+					results={this.state.results}
 				/>
 				<Page 
 					title={this.state.title}

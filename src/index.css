@@ -417,6 +417,7 @@ h4, h5 {
 p {
 	margin-bottom: 1.25rem;
 	margin-top: 0;
+	word-break: break-word;
 }
 
 button, input {
@@ -468,6 +469,23 @@ button {
 	/*text-transform: uppercase;*/
 }
 
+.searchResults {
+	margin: 0 2.5vw 0 2.5vw;
+}
+
+.resultCard {
+	background-color: #fefdfb;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(198,195,196,1), 
+		0 3px 8px rgba(198,195,196,0.8);
+	margin-bottom: 1.125rem;
+    padding: 1px 6px;
+}
+
+.resultCard p {
+	font-style: italic;
+}
+
 .beneathP {
 	margin-top: -0.4774rem;
 }
@@ -476,10 +494,13 @@ button {
 	margin-top: 1.25rem;
 }
 
-.pageText {
+.pageText, .searchResults {
     font-feature-settings: 'onum';
-	margin: 0 4vw 0 4vw;
 	max-width: 450px;
+}
+
+.pageText {
+	margin: 0 4vw 0 4vw;
 }
 
 /* PRINT STYLES */
