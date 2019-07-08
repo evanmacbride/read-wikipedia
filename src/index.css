@@ -446,7 +446,8 @@ button {
 .banner {
 	align-items: center;
 	background-color: #d2eac5;
-    box-shadow: 0 2px 4px rgba(198,195,196,1), 0 6px 16px rgba(198,195,196,0.8);
+    box-shadow: 0 1px 2px rgba(198,195,196,1), 
+		0 3px 8px rgba(198,195,196,0.8);
 	display: flex;
 	flex-flow: row wrap;
 	font-family: 'Jost*';
@@ -478,8 +479,14 @@ button {
     border-radius: 6px;
     box-shadow: 0 1px 2px rgba(198,195,196,1), 
 		0 3px 8px rgba(198,195,196,0.8);
-	margin-bottom: 1.125rem;
-    padding: 1px 6px;
+	margin-bottom: 1.25rem;
+	overflow: auto;
+    padding: 0 6px;
+}
+
+.resultCard h2 {
+    margin: 0.7726rem 0 0.4774rem 0;
+    color: #6CA14C;	
 }
 
 .resultCard p {

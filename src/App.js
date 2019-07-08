@@ -200,7 +200,7 @@ class App extends React.Component {
 		.catch(err => {
 			console.log(err);
 			this.setState(
-				{title: "SEARCH FAILED",
+				{title: "Search Failed",
 				pageText: "Could not contact the Wikipedia API. Please check your internet connection and try again."});	
 		}
 		);
@@ -220,15 +220,18 @@ class App extends React.Component {
 				if (response.query.searchinfo.totalhits === 0) {
 					this.setState(
 						{title: "Search Failed",
-						pageText: "Your search for '" + this.state.query +
+						results: "Your search for '" + this.state.query +
 							"' yielded zero results. Please try again."});
 					return;
 				}
 				const searchResults = response.query.search.map((result,index) => {
 					const cardTitle = result.title;
 					console.log(result.snippet);
-					const cardSnippet = result.snippet.replace(
-						/<span class="searchmatch">|<\/span>|&quot;| \(listen\)/g, '') + "...";
+					/*const cardSnippet = result.snippet.replace(
+						/<span class="searchmatch">|<\/span>|&quot;| \(listen\)/g, '') + "...";*/
+					const div = document.createElement("div");
+					div.innerHTML = result.snippet.replace(/ \(listen\)/g, '') + "...";
+					const cardSnippet = div.textContent || div.innerText;
 					return (
 						<div className="resultCard" key={index}>
 							<h2>{cardTitle}</h2>
@@ -236,18 +239,22 @@ class App extends React.Component {
 						</div>
 					)
 				});
-				this.setState({results: searchResults});
+				this.setState({
+					title: "Search Results for '" + this.state.query + "'",
+					results: searchResults});
 			}
 		)
 		.catch(err => {
 			console.log(err);
-			this.setState(
-				{title: "Search Failed",
-				pageText: "Could not contact the Wikipedia API. Please check your internet connection and try again."});	
-		}
-		);
+			this.setState({
+				title: "Search Failed",
+				results: "Could not contact the Wikipedia API. Please check your internet connection and try again."
+			});	
+		});
 	}
 	
+	// Set different modes. If in search mode, do no show Page. If in read
+	// mode, do not show SearchResults.
 	render() {
 		return (
 			<div>
@@ -257,10 +264,11 @@ class App extends React.Component {
 				/>
 				<SearchResults
 					results={this.state.results}
+					title={this.state.title}
 				/>
 				<Page 
-					title={this.state.title}
 					pageText={this.state.pageText} 
+					title={this.state.title}
 				/>
 			</div>
 		)
