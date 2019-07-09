@@ -463,6 +463,17 @@ button {
 	margin: 0;
 }
 
+@keyframes pulse {
+	from {opacity: 0;}
+	to {opacity: 1;}
+}
+
+.loadingMessage {
+	animation: pulse 3s 0.5s infinite alternate;
+	opacity: 0;
+	text-align: center;	
+}
+
 .pageTitle {
 	/*letter-spacing: 0.265rem;*/
 	margin: calc(2.3125rem + 14px) 0 1.4375rem 0;

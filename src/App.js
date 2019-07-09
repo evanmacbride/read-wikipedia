@@ -14,6 +14,11 @@ import SearchResults from "./SearchResults"
 	return assetTitleArray[0];
 }*/
 
+const Mode = {
+	SEARCH: 0,
+	READ: 1
+};
+
 class App extends React.Component {
 	constructor() {
 		super();
@@ -21,10 +26,13 @@ class App extends React.Component {
 			pageText: null,
 			query: null,
 			title: null,
-			results: null
+			results: null,
+			siteMode: null,
+			loading: false
 		};
 		this.handleFormChange = this.handleFormChange.bind(this);
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
+		this.handleCardClick = this.handleCardClick.bind(this);
 		
 	}
 	
@@ -39,20 +47,23 @@ class App extends React.Component {
 	
 	// Redirect to first page with title that matches query. CHANGE TO 
 	// handleCardClick(). PASS TO SEARCHRESULTS.
-	handleFormSubmit() {
-		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&titles=" + 
-			this.state.query + "&format=json&redirects&explaintext")
+	//handleFormSubmit() {
+	handleCardClick(id) {
+		this.setState({loading: true, siteMode: Mode.READ});
+		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&pageids=" + 
+			id + "&format=json&redirects&explaintext")
 			.then(response => response.json())
 			.catch(err => {
 				console.log(err);
 				return Promise.reject(err);
 			})
 			.then(response => {
+				this.setState({loading: false});
 				if (Object.values(response.query.pages)[0].hasOwnProperty("missing")) {
 					this.setState(
-						{title: "Search Failed",
-						pageText: "Your search for '" + this.state.query +
-							"' yielded zero results. Please try again."});
+						{loading: false,
+						title: "Search Failed",
+						pageText: "Could not retrieve page id " + id + ". Please try again."});
 					return;
 				}
 				
@@ -66,8 +77,6 @@ class App extends React.Component {
 				let responseText = Object.values(response.query.pages)[0].extract;
 				
 				responseText = responseText.replace(/ {2,}/g, ' ');
-				
-				//responseText = responseText.replace(/([a-z0-9]\p{Ll}?"?\)?"?\.)([A-Z])/ug,'$1\n$2');
 				responseText = responseText.replace(/(\S"?'?\)?\."?\)?)(\(?'?"?[A-Z][^.])/g,'$1\n$2');
 				// Catch paragraphs ending in a quote
 				responseText = responseText.replace(/('?\.")([A-Z])/g,'$1\n$2');
@@ -79,7 +88,6 @@ class App extends React.Component {
 				
 				// Remove artifacts from code examples
 				responseText = responseText.replace(/^ *\{.*displaystyle.*\} *$/g, '');
-				//responseText = responseText.replace(/(\r\n|\r|\n) *\pL$/ug, '');
 				
 				// Use booleans to apply appropriate classes to set margins
 				// to keep the baseline grid before and after h 
@@ -200,7 +208,8 @@ class App extends React.Component {
 		.catch(err => {
 			console.log(err);
 			this.setState(
-				{title: "Search Failed",
+				{loading:false,
+				title: "Search Failed",
 				pageText: "Could not contact the Wikipedia API. Please check your internet connection and try again."});	
 		}
 		);
@@ -208,6 +217,7 @@ class App extends React.Component {
 	
 	// Return srlimit pages that match query
 	handleFormSubmit() {
+		this.setState({loading: true, siteMode: Mode.SEARCH});
 		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query" + 
 			"&format=json&list=search&srsearch=" + this.state.query + 
 			"&srprop=snippet&srlimit=20")
@@ -219,27 +229,33 @@ class App extends React.Component {
 			.then(response => {
 				if (response.query.searchinfo.totalhits === 0) {
 					this.setState(
-						{title: "Search Failed",
+						{
+						loading: false,
+						title: "Search Failed",
 						results: "Your search for '" + this.state.query +
 							"' yielded zero results. Please try again."});
 					return;
 				}
 				const searchResults = response.query.search.map((result,index) => {
 					const cardTitle = result.title;
-					console.log(result.snippet);
-					/*const cardSnippet = result.snippet.replace(
-						/<span class="searchmatch">|<\/span>|&quot;| \(listen\)/g, '') + "...";*/
+					//console.log(result);
 					const div = document.createElement("div");
 					div.innerHTML = result.snippet.replace(/ \(listen\)/g, '') + "...";
 					const cardSnippet = div.textContent || div.innerText;
+					const pageid = result.pageid;
 					return (
-						<div className="resultCard" key={index}>
+						<div 
+							className="resultCard" 
+							key={index} 
+							onClick={() => this.handleCardClick(pageid)}
+							>
 							<h2>{cardTitle}</h2>
 							<p>{cardSnippet}</p>
 						</div>
 					)
 				});
 				this.setState({
+					loading: false,
 					title: "Search Results for '" + this.state.query + "'",
 					results: searchResults});
 			}
@@ -247,14 +263,13 @@ class App extends React.Component {
 		.catch(err => {
 			console.log(err);
 			this.setState({
+				loading: false,
 				title: "Search Failed",
 				results: "Could not contact the Wikipedia API. Please check your internet connection and try again."
 			});	
 		});
 	}
 	
-	// Set different modes. If in search mode, do no show Page. If in read
-	// mode, do not show SearchResults.
 	render() {
 		return (
 			<div>
@@ -262,14 +277,21 @@ class App extends React.Component {
 					onFormChange={this.handleFormChange}
 					onFormSubmit={this.handleFormSubmit}
 				/>
-				<SearchResults
-					results={this.state.results}
-					title={this.state.title}
-				/>
-				<Page 
-					pageText={this.state.pageText} 
-					title={this.state.title}
-				/>
+				{this.state.loading ? <h1 className="loadingMessage">Loading...</h1> :
+				this.state.siteMode === Mode.SEARCH ? 
+				<main>
+					<h1 className="pageTitle">{this.state.title}</h1>
+					<SearchResults
+						onCardClick={this.handleCardClick}
+						results={this.state.results}
+					/>
+				</main> :
+				<main>
+					<h1 className="pageTitle">{this.state.title}</h1>
+					<Page 
+						pageText={this.state.pageText} 
+					/>
+				</main>}
 			</div>
 		)
 	}
