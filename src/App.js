@@ -15,20 +15,22 @@ import SearchResults from "./SearchResults"
 }*/
 
 const Mode = {
-	SEARCH: 0,
-	READ: 1
+	LAND: 0,
+	SEARCH: 1,
+	READ: 2
 };
 
 class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
+			loading: false,
+			pageLink: null,
 			pageText: null,
 			query: null,
-			title: null,
 			results: null,
-			siteMode: null,
-			loading: false
+			siteMode: Mode.LAND,
+			title: null
 		};
 		this.handleFormChange = this.handleFormChange.bind(this);
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -201,6 +203,7 @@ class App extends React.Component {
 					textArray.splice(deleteList[i], 1);
 				}
 				this.setState({
+					pageLink: "https://en.wikipedia.org/?curid=" + id,
 					pageText: textArray
 				})
 			}
@@ -271,27 +274,29 @@ class App extends React.Component {
 	}
 	
 	render() {
+		const search =	(<main>
+							<h1 className="pageTitle">{this.state.title}</h1>
+							<SearchResults
+								onCardClick={this.handleCardClick}
+								results={this.state.results}
+							/>
+						</main>);
+		const read =	(<main>
+							<h1 className="pageTitle">{this.state.title}</h1>
+							<Page 
+								pageLink={this.state.pageLink}
+								pageText={this.state.pageText}
+							/>
+						</main>);
 		return (
 			<div>
 				<Header 
 					onFormChange={this.handleFormChange}
 					onFormSubmit={this.handleFormSubmit}
 				/>
-				{this.state.loading ? <h1 className="loadingMessage">Loading...</h1> :
-				this.state.siteMode === Mode.SEARCH ? 
-				<main>
-					<h1 className="pageTitle">{this.state.title}</h1>
-					<SearchResults
-						onCardClick={this.handleCardClick}
-						results={this.state.results}
-					/>
-				</main> :
-				<main>
-					<h1 className="pageTitle">{this.state.title}</h1>
-					<Page 
-						pageText={this.state.pageText} 
-					/>
-				</main>}
+				{this.state.loading && <h1 className="loadingMessage">Loading...</h1>}
+				{(this.state.siteMode === Mode.SEARCH && !this.state.loading) && search}
+				{(this.state.siteMode === Mode.READ && !this.state.loading) && read}
 			</div>
 		)
 	}

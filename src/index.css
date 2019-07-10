@@ -443,6 +443,11 @@ button {
 	margin-left: 0.25rem;
 }
 
+a {
+	color: #44a50a;
+	text-decoration: none;
+}
+
 .banner {
 	align-items: center;
 	background-color: #d2eac5;
@@ -497,7 +502,8 @@ button {
 
 .resultCard h2 {
     margin: 0.7726rem 0 0.4774rem 0;
-    color: #6CA14C;	
+    /*color: #6CA14C;*/
+	color: #44a50a;
 }
 
 .resultCard p {
@@ -519,6 +525,10 @@ button {
 
 .pageText {
 	margin: 0 4vw 0 4vw;
+}
+
+.pageFooter {
+	margin-bottom: 1.25rem;
 }
 
 /* PRINT STYLES */
