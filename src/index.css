@@ -385,9 +385,10 @@ body {
 }
 
 main {
+	align-items: center;
 	display: flex;
 	flex-flow: column wrap;
-	align-items: center;
+    min-height: calc(100vh - 5.05rem);
 }
 
 h1, h2, h3, h4, h5 {
@@ -533,6 +534,13 @@ a {
 
 .pageFooter {
 	margin-bottom: 1.25rem;
+}
+
+.siteFooter {
+	background-color: #21440d;
+    box-shadow: 0 -1px 2px rgba(198,195,196,1), 0 -3px 8px rgba(198,195,196,0.8);
+    color: rgba(251,249,243,0.92); /* Replace with color used for dark mode text */
+	padding: 0.5rem 4vw;
 }
 
 /* PRINT STYLES */

@@ -274,6 +274,7 @@ class App extends React.Component {
 	}
 	
 	render() {
+		const land = (<main></main>);
 		const search =	(<main>
 							<h1 className="pageTitle">{this.state.title}</h1>
 							<SearchResults
@@ -294,9 +295,11 @@ class App extends React.Component {
 					onFormChange={this.handleFormChange}
 					onFormSubmit={this.handleFormSubmit}
 				/>
-				{this.state.loading && <h1 className="loadingMessage">Loading...</h1>}
+				{this.state.loading && <main><h1 className="loadingMessage">Loading...</h1></main>}
+				{(this.state.siteMode === Mode.LAND && !this.state.loading) && land}
 				{(this.state.siteMode === Mode.SEARCH && !this.state.loading) && search}
 				{(this.state.siteMode === Mode.READ && !this.state.loading) && read}
+				<footer className="siteFooter">&#169; 2019 Evan MacBride</footer>
 			</div>
 		)
 	}
