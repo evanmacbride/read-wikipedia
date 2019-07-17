@@ -481,7 +481,7 @@ a {
 
 .pageTitle {
 	/*letter-spacing: 0.265rem;*/
-	margin: calc(2.3125rem + 14px) 0 1.4375rem 0;
+	margin: calc(2.3125rem + 14px) 2.5vw 1.4375rem 2.5vw;
 	text-align: center;
 	/*text-transform: uppercase;*/
 }
@@ -504,10 +504,14 @@ a {
     margin: 0.7726rem 0 0.4774rem 0;
     /*color: #6CA14C;*/
 	color: #44a50a;
+	font-family: 'Andada';
+	letter-spacing: 0;
+	text-transform: none;
 }
 
 .resultCard p {
-	font-style: italic;
+	/*font-style: italic;*/
+	font-family: 'Jost*';
 }
 
 .beneathP {
