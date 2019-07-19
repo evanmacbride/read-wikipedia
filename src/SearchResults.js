@@ -15,6 +15,7 @@ class SearchResults extends React.Component {
 	render() {
 		return (
 			<section className="searchResults">
+				<h1 className="pageTitle">{this.props.title}</h1>
 				{this.props.results}
 			</section>
 		)

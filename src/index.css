@@ -372,6 +372,12 @@ ul {
 	src:	local("Jost*"),
 			url("fonts/Jost-400-Book.otf") format("opentype");
 }
+@font-face {
+	font-family: "Jost*";
+	src:	local("Jost* Thin"),
+			url("fonts/Jost-200-Thin.otf") format("opentype");
+	font-weight: 200;
+}
 
 body {
 	/*background-color: #FCF9EE;*/
@@ -388,7 +394,8 @@ main {
 	align-items: center;
 	display: flex;
 	flex-flow: column wrap;
-    min-height: calc(100vh - 5.05rem);
+    min-height: calc(100vh - 2.25rem);
+	width: 100vw;
 }
 
 h1, h2, h3, h4, h5 {
@@ -398,7 +405,7 @@ h1, h2, h3, h4, h5 {
 }
 
 h1, h2 {
-	font-family: 'Jost*','Futura',sans-serif;
+	font-family: 'Jost*','Futura','Verdana',sans-serif;
 	letter-spacing: 0.13rem;
 	margin: 2.3125rem 0 1.4375rem 0;
 	text-transform: uppercase;
@@ -421,6 +428,10 @@ p {
 	word-break: break-word;
 }
 
+form {
+	font-family: 'Jost*','Futura','Verdana',sans-serif;
+}
+
 button, input {
 	line-height: initial;
 	border: none;
@@ -429,8 +440,6 @@ button, input {
 
 input {
 	background-color: #fefdfb;
-	/*box-shadow: 0 1px 2px rgba(198,195,196,0.85) inset, 
-		0 2px 4px rgba(198,195,196,0.65) inset;*/
 	height: 1.625rem;
 	max-width: 66%;
 	padding: 0 0.375rem;
@@ -456,7 +465,7 @@ a {
 		0 3px 8px rgba(198,195,196,0.8);
 	display: flex;
 	flex-flow: row wrap;
-	font-family: 'Jost*';
+	font-family: 'Jost*', 'Futura', 'Verdana', sans-serif;
 	justify-content: space-between;
 	padding: 0.5rem 4vw 0.5rem 4vw;
 }
@@ -467,6 +476,34 @@ a {
 	font-size: 0.6875rem;
 	line-height: 0.9;
 	margin: 0;
+}
+
+.landing {
+	background: linear-gradient(transparent, rgba(210,234,197,0.25));
+	display: flex;
+	flex-flow: column wrap;
+	height: calc(100vh - 2.25rem);
+	justify-content: center;
+	padding: 0 12vw;
+}
+
+.landingLogo {
+	font-size: 3rem;
+	font-weight: 200;
+	line-height: 2.5rem;
+	margin-bottom: 2.5rem;
+	margin-top: 0;
+}
+
+.landingWrap {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.landingCopy {
+	font-style: italic;
+	margin-bottom: 2.25rem;
+	opacity: 0.88;
 }
 
 @keyframes pulse {
@@ -537,9 +574,11 @@ a {
 }
 
 .siteFooter {
-	background-color: #21440d;
-    box-shadow: 0 -1px 2px rgba(198,195,196,1), 0 -3px 8px rgba(198,195,196,0.8);
-    color: rgba(251,249,243,0.92); /* Replace with color used for dark mode text */
+	/*background-color: #21440d;*/
+	background-color: #e5e5e3;
+    box-shadow: 0 -1px 2px rgba(198,195,196,1), 
+		0 -3px 8px rgba(198,195,196,0.8);
+    /*color: rgba(251,249,243,0.92);*/
 	padding: 0.5rem 4vw;
 }
 

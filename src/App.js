@@ -1,4 +1,5 @@
 import React from "react"
+import Landing from "./Landing"
 import Page from "./Page"
 import Header from "./Header"
 import SearchResults from "./SearchResults"
@@ -35,7 +36,7 @@ class App extends React.Component {
 		this.handleFormChange = this.handleFormChange.bind(this);
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
 		this.handleCardClick = this.handleCardClick.bind(this);
-		
+		this.handleLogoClick = this.handleLogoClick.bind(this);
 	}
 	
 	handleFormChange(text) {
@@ -273,32 +274,45 @@ class App extends React.Component {
 		});
 	}
 	
+	handleLogoClick() {
+		this.setState({siteMode: Mode.LAND});
+	}
+	
 	render() {
-		const land = (<main></main>);
-		const search =	(<main>
-							<h1 className="pageTitle">{this.state.title}</h1>
+		const land = (	
+						<Landing 
+							onFormChange={this.handleFormChange}
+							onFormSubmit={this.handleFormSubmit}		
+						/>
+					);
+		const head = (<Header 
+						onFormChange={this.handleFormChange}
+						onFormSubmit={this.handleFormSubmit}
+						onLogoClick={this.handleLogoClick}
+					/>);
+		const search =	(
 							<SearchResults
+								title={this.state.title}
 								onCardClick={this.handleCardClick}
 								results={this.state.results}
 							/>
-						</main>);
-		const read =	(<main>
-							<h1 className="pageTitle">{this.state.title}</h1>
+						);
+		const read =	(
 							<Page 
+								title={this.state.title}
 								pageLink={this.state.pageLink}
 								pageText={this.state.pageText}
 							/>
-						</main>);
+						);
 		return (
 			<div>
-				<Header 
-					onFormChange={this.handleFormChange}
-					onFormSubmit={this.handleFormSubmit}
-				/>
-				{this.state.loading && <main><h1 className="loadingMessage">Loading...</h1></main>}
-				{(this.state.siteMode === Mode.LAND && !this.state.loading) && land}
-				{(this.state.siteMode === Mode.SEARCH && !this.state.loading) && search}
-				{(this.state.siteMode === Mode.READ && !this.state.loading) && read}
+				{this.state.siteMode !== Mode.LAND && head}
+				<main>
+					{this.state.loading && <h1 className="loadingMessage">Loading...</h1>}
+					{(this.state.siteMode === Mode.LAND && !this.state.loading) && land}
+					{(this.state.siteMode === Mode.SEARCH && !this.state.loading) && search}
+					{(this.state.siteMode === Mode.READ && !this.state.loading) && read}
+				</main>
 				<footer className="siteFooter">&#169; 2019 Evan MacBride</footer>
 			</div>
 		)

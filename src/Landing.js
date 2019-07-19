@@ -1,19 +1,14 @@
 import React from "react"
 
-class Header extends React.Component {
+class Landing extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handleChange = this.handleChange.bind(this);
-		this.handleClick = this.handleClick.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 	
 	handleChange(event) {
 		this.props.onFormChange(event.target.value);
-	}
-	
-	handleClick(event) {
-		this.props.onLogoClick();
 	}
 	
 	handleSubmit(event) {
@@ -23,15 +18,18 @@ class Header extends React.Component {
 	
 	render() {
 		return (
-			<header className="banner">
-				<h1 className="logo" onClick={this.handleClick}>Read<br/>Wiki<br/>Pedia</h1>
+			<section className="landing">
+				<div className="landingWrap">
+					<h1 className="landingLogo">Read<br/>Wiki<br/>Pedia</h1>
+					<p className="landingCopy">A text-only Wikipedia reader designed for simplicity and readability</p>
+				</div>
 				<form onSubmit={this.handleSubmit}>
 					<input onChange={this.handleChange} />
 					<button>Search</button>
 				</form>
-			</header>
+			</section>
 		)
 	}
 }
 
-export default Header
+export default Landing
