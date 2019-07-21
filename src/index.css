@@ -379,6 +379,10 @@ ul {
 	font-weight: 200;
 }
 
+html {
+	height: 100%;
+}
+
 body {
 	/*background-color: #FCF9EE;*/
 	background-color: #fbf9f3;
@@ -386,6 +390,7 @@ body {
 	color: #1e1d1e;
 	font-family: 'Andada', 'Times', 'Georgia', serif;
 	font-size: 1rem;
+	height: 100%;
 	line-height: 1.25;
 	text-rendering: optimizeLegibility;
 }
@@ -394,8 +399,9 @@ main {
 	align-items: center;
 	display: flex;
 	flex-flow: column wrap;
-    min-height: calc(100vh - 2.25rem);
-	width: 100vw;
+	height: unset;
+    min-height: 520px;
+	/*width: 100vw;*/
 }
 
 h1, h2, h3, h4, h5 {
@@ -458,6 +464,14 @@ a {
 	text-decoration: none;
 }
 
+#root {
+	height: 100%;
+}
+
+.wrap {
+	height: 100%;
+}
+
 .banner {
 	align-items: center;
 	background-color: #d2eac5;
@@ -478,11 +492,15 @@ a {
 	margin: 0;
 }
 
+.landingMain {
+	height: calc(100% - 2.625rem);
+}
+
 .landing {
-	background: linear-gradient(transparent, rgba(210,234,197,0.25));
+	/*background: linear-gradient(transparent, rgba(210,234,197,0.25));*/
 	display: flex;
 	flex-flow: column wrap;
-	height: calc(100vh - 2.25rem);
+	height: 100%;
 	justify-content: center;
 	padding: 0 12vw;
 }
@@ -495,20 +513,41 @@ a {
 	margin-top: 0;
 }
 
+.logoWordRead {
+	letter-spacing: 0.16rem;
+}
+
+.logoWordWiki {
+    letter-spacing: 0.15rem;	
+}
+
 .landingWrap {
 	display: flex;
 	flex-flow: row wrap;
 }
 
 .landingCopy {
-	font-style: italic;
+	/*font-style: italic;*/
+	font-family: 'Jost*','Futura','Verdana',sans-serif;
 	margin-bottom: 2.25rem;
 	opacity: 0.88;
+}
+
+.landing input {
+	/*box-shadow: 0 0.5px 1.5px #c6c5c4 inset,
+	0 -0.5px 1.5px #c6c5c4 inset,
+	0 1px 3px #c6c5c4cc inset,
+	0 -1px 3px #c6c5c4cc inset;*/
+	border: 1px solid #c6c5c4;
 }
 
 @keyframes pulse {
 	from {opacity: 0;}
 	to {opacity: 1;}
+}
+
+.loadingMain {
+	height: calc(100% - 5.425rem);
 }
 
 .loadingMessage {
@@ -574,11 +613,9 @@ a {
 }
 
 .siteFooter {
-	/*background-color: #21440d;*/
-	background-color: #e5e5e3;
-    box-shadow: 0 -1px 2px rgba(198,195,196,1), 
-		0 -3px 8px rgba(198,195,196,0.8);
-    /*color: rgba(251,249,243,0.92);*/
+    background-color: #c6c5c4;
+	border-top: 6px solid #d2eac5;
+	font-family: 'Jost*','Futura','Verdana',sans-serif;
 	padding: 0.5rem 4vw;
 }
 

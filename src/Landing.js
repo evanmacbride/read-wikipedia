@@ -20,8 +20,12 @@ class Landing extends React.Component {
 		return (
 			<section className="landing">
 				<div className="landingWrap">
-					<h1 className="landingLogo">Read<br/>Wiki<br/>Pedia</h1>
-					<p className="landingCopy">A text-only Wikipedia reader designed for simplicity and readability</p>
+					<h1 className="landingLogo">
+						<span className="logoWordRead">Read</span><br/>
+						<span className="logoWordWiki">Wiki</span><br/>
+						<span className="logoWordPedia">Pedia</span>
+					</h1>
+					<p className="landingCopy">The simple, text-only Wikipedia reader</p>
 				</div>
 				<form onSubmit={this.handleSubmit}>
 					<input onChange={this.handleChange} />
