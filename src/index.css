@@ -400,7 +400,7 @@ main {
 	display: flex;
 	flex-flow: column wrap;
 	height: unset;
-    min-height: 520px;
+    min-height: 460px;
 	/*width: 100vw;*/
 }
 
@@ -518,7 +518,9 @@ a {
 }
 
 .logoWordWiki {
-    letter-spacing: 0.15rem;	
+    /*letter-spacing: 0.15rem;	*/
+	letter-spacing: 0.2rem;
+    margin-left: -0.16rem;
 }
 
 .landingWrap {

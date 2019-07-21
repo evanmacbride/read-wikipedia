@@ -12,6 +12,10 @@ class SearchResults extends React.Component {
 		//console.log(event.target.class);
 	}
 	
+	componentDidMount() {
+		window.scrollTo(0, 0);
+	}
+	
 	render() {
 		return (
 			<section className="searchResults">
