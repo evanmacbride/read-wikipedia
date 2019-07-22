@@ -435,7 +435,11 @@ p {
 }
 
 form {
+	align-items: center;
+	display: flex;
+	flex-flow: row wrap;
 	font-family: 'Jost*','Futura','Verdana',sans-serif;
+	justify-content: flex-end;
 }
 
 button, input {
@@ -447,16 +451,21 @@ button, input {
 input {
 	background-color: #fefdfb;
 	height: 1.625rem;
-	max-width: 66%;
 	padding: 0 0.375rem;
 }
 
 button {
+	align-items: center;
 	background-color: #3f8118;
 	color: #fbf9f3;
 	cursor: pointer;
+	display: flex;
+	flex-flow: row wrap;
 	height: 1.625rem;
+	justify-content: center;
 	margin-left: 0.25rem;
+	padding: 0;
+	width: 1.625rem;
 }
 
 a {
@@ -492,6 +501,12 @@ a {
 	margin: 0;
 }
 
+.searchIcon {
+	fill: #fbf9f3;
+	height: 1rem;
+	width: auto;
+}
+
 .landingMain {
 	height: calc(100% - 2.625rem);
 }
@@ -505,11 +520,16 @@ a {
 	padding: 0 12vw;
 }
 
+.landing form {
+	justify-content: flex-start;
+}
+
 .landingLogo {
 	font-size: 3rem;
 	font-weight: 200;
 	line-height: 2.5rem;
 	margin-bottom: 2.5rem;
+	margin-right: 25px;
 	margin-top: 0;
 }
 
@@ -519,7 +539,7 @@ a {
 
 .logoWordWiki {
     /*letter-spacing: 0.15rem;	*/
-	letter-spacing: 0.2rem;
+	letter-spacing: 0.205rem;
     margin-left: -0.16rem;
 }
 
@@ -530,9 +550,11 @@ a {
 
 .landingCopy {
 	/*font-style: italic;*/
+	align-self: flex-end;
 	font-family: 'Jost*','Futura','Verdana',sans-serif;
 	margin-bottom: 2.25rem;
 	opacity: 0.88;
+	padding-bottom: 0.25rem;
 }
 
 .landing input {
@@ -541,6 +563,8 @@ a {
 	0 1px 3px #c6c5c4cc inset,
 	0 -1px 3px #c6c5c4cc inset;*/
 	border: 1px solid #c6c5c4;
+	box-sizing: border-box;
+	width: calc(100% - 2.75rem);
 }
 
 @keyframes pulse {
@@ -614,8 +638,25 @@ a {
 	margin-bottom: 1.25rem;
 }
 
+.jumpTop {
+	background: #ffffff7f;
+	border: 1px solid #c6c5c4;
+	border-radius: 100%;
+	bottom: 6vw;
+	color: #565557;
+	float: right;
+    font-family: 'Jost*';
+    font-size: 2rem;
+    height: 2rem;
+    margin: 0 6vw 0 0;
+    padding: 0;
+	position: sticky;
+	width: 2rem;
+}
+
 .siteFooter {
-    background-color: #c6c5c4;
+    /*background-color: #c6c5c4;*/
+	background-color: #d6d5d4;
 	border-top: 6px solid #d2eac5;
 	font-family: 'Jost*','Futura','Verdana',sans-serif;
 	padding: 0.5rem 4vw;

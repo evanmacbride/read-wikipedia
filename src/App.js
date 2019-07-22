@@ -324,6 +324,7 @@ class App extends React.Component {
 				{(this.state.siteMode === Mode.LAND && !this.state.loading) && land}
 				{(this.state.siteMode === Mode.SEARCH && !this.state.loading) && search}
 				{(this.state.siteMode === Mode.READ && !this.state.loading) && read}
+				<button className="jumpTop">^</button>
 				<footer className="siteFooter">&#169; 2019 Evan MacBride</footer>
 			</div>
 		)
