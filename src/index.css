@@ -450,7 +450,7 @@ button, input {
 
 input {
 	background-color: #fefdfb;
-	height: 1.625rem;
+	height: 2rem;
 	padding: 0 0.375rem;
 }
 
@@ -461,11 +461,11 @@ button {
 	cursor: pointer;
 	display: flex;
 	flex-flow: row wrap;
-	height: 1.625rem;
+	height: 2rem;
 	justify-content: center;
 	margin-left: 0.25rem;
 	padding: 0;
-	width: 1.625rem;
+	width: 2rem;
 }
 
 a {
@@ -490,7 +490,7 @@ a {
 	flex-flow: row wrap;
 	font-family: 'Jost*', 'Futura', 'Verdana', sans-serif;
 	justify-content: space-between;
-	padding: 0.5rem 4vw 0.5rem 4vw;
+	padding: 0.4rem 4vw;
 }
 
 .banner h1 {
@@ -639,19 +639,18 @@ a {
 }
 
 .jumpTop {
-	background: #ffffff7f;
+	background: #ffffffcf;
 	border: 1px solid #c6c5c4;
 	border-radius: 100%;
-	bottom: 6vw;
+	bottom: 3.7vw;
 	color: #565557;
-	float: right;
-    font-family: 'Jost*';
-    font-size: 2rem;
-    height: 2rem;
-    margin: 0 6vw 0 0;
+    font-family: 'Jost*','Futura','Verdana',sans-serif;
+    font-size: 2.5rem;
+    height: 2.5rem;
     padding: 0;
-	position: sticky;
-	width: 2rem;
+	position: fixed;
+	right: 6vw;
+	width: 2.5rem;
 }
 
 .siteFooter {

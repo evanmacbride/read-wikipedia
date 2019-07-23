@@ -306,6 +306,10 @@ class App extends React.Component {
 									onCardClick={this.handleCardClick}
 									results={this.state.results}
 								/>
+								<button 
+									className="jumpTop"
+									onClick={() => window.scrollTo(0, 0)}
+									>^</button>
 							</main>
 						);
 		const read =	(
@@ -315,6 +319,10 @@ class App extends React.Component {
 									pageLink={this.state.pageLink}
 									pageText={this.state.pageText}
 								/>
+								<button 
+									className="jumpTop"
+									onClick={() => window.scrollTo(0, 0)}
+									>^</button>
 							</main>
 						);
 		return (
@@ -324,7 +332,6 @@ class App extends React.Component {
 				{(this.state.siteMode === Mode.LAND && !this.state.loading) && land}
 				{(this.state.siteMode === Mode.SEARCH && !this.state.loading) && search}
 				{(this.state.siteMode === Mode.READ && !this.state.loading) && read}
-				<button className="jumpTop">^</button>
 				<footer className="siteFooter">&#169; 2019 Evan MacBride</footer>
 			</div>
 		)
