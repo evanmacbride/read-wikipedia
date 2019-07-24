@@ -473,6 +473,8 @@ a {
 	text-decoration: none;
 }
 
+
+
 #root {
 	height: 100%;
 }
@@ -617,6 +619,41 @@ a {
 	font-family: 'Jost*';
 }
 
+.resultsNav {
+
+	display: flex;
+	flex-flow: row wrap;
+    font-family: 'Jost*','Futura','Verdana',sans-serif;
+	justify-content: space-between;
+	margin-bottom: 1rem;
+
+}
+
+.resultsNav button {
+	align-items: center;
+	background: transparent;
+	color: #3f8118;
+	display: flex;
+	flex-flow: row wrap;
+	letter-spacing: 0.13rem;
+	margin: 0;
+	text-transform: uppercase;
+	width: unset;
+}
+
+.arrowBtn {
+	fill: #363538;
+	height: 1rem;
+}
+
+.loadNext {
+	margin-left: 0.4rem;
+}
+
+.loadPrevious {
+	margin-right: 0.4rem;
+}
+
 .beneathP {
 	margin-top: -0.4774rem;
 }
@@ -644,13 +681,14 @@ a {
 	border-radius: 100%;
 	bottom: 3.7vw;
 	color: #565557;
-    font-family: 'Jost*','Futura','Verdana',sans-serif;
+    font-family: 'Jost* Light','Futura','Verdana',sans-serif;
     font-size: 2.5rem;
     height: 2.5rem;
-    padding: 0;
+	margin: 0;
+    padding: 0;	
 	position: fixed;
 	right: 6vw;
-	width: 2.5rem;
+	width: 2.5rem;	
 }
 
 .siteFooter {
