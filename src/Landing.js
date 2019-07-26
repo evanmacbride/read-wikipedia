@@ -12,7 +12,7 @@ class Landing extends React.Component {
 	}
 	
 	handleSubmit(event) {
-		this.props.onFormSubmit(event.target.value);
+		this.props.onFormSubmit(this.props.offset, 0);
 		event.preventDefault();
 	}
 	

@@ -17,7 +17,9 @@ class Header extends React.Component {
 	}
 	
 	handleSubmit(event) {
-		this.props.onFormSubmit(event.target.value);
+		//this.props.onFormSubmit(event.target.value);
+		this.props.onFormSubmit(this.props.offset, 0);
+		console.log('Hello again!');
 		event.preventDefault();
 	}
 	

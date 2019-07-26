@@ -21,11 +21,14 @@ const Mode = {
 	READ: 2
 };
 
+const RESULTS_PER_PAGE = 20;
+
 class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
 			loading: false,
+			offset: 0,
 			pageLink: null,
 			pageText: null,
 			query: null,
@@ -48,9 +51,6 @@ class App extends React.Component {
 	// TODO: Remove code examples and elide the p tags they separate. Only
 	// fetch page after user clicks the associated page card.
 	
-	// Redirect to first page with title that matches query. CHANGE TO 
-	// handleCardClick(). PASS TO SEARCHRESULTS.
-	//handleFormSubmit() {
 	handleCardClick(id) {
 		this.setState({loading: true, siteMode: Mode.READ});
 		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&pageids=" + 
@@ -108,7 +108,7 @@ class App extends React.Component {
 				// text has ended.
 				const breakList = ["== GALLERY ==", "== NOTES ==", 
 					"== REFERENCES ==",	"== EXTERNAL LINKS ==", "== SEE ALSO ==",
-					"== SELECTED BIBLIOGRAPHY =="];
+					"== SELECTED BIBLIOGRAPHY ==", "== BIBLIOGRAPHY =="];
 				const breakPoints = [];
 				
 				//let textArray = responseText.split(/[\r\n]+/).map((text, index) => {
@@ -214,17 +214,33 @@ class App extends React.Component {
 			this.setState(
 				{loading:false,
 				title: "Search Failed",
-				pageText: "Could not contact the Wikipedia API. Please check your internet connection and try again."});	
+				pageText: "Could not contact Wikipedia. Please check your internet connection and try again."});	
 		}
 		);
 	}
 	
 	// Return srlimit pages that match query
-	handleFormSubmit() {
+	handleFormSubmit(offset, direction) {
+		let newOffset = 0;
+		// Advance the offset when clicking "Next".
+		// TODO: Make sure a next page is available.
+		if (direction > 0) {
+			newOffset = this.state.offset + RESULTS_PER_PAGE;
+		// Decrement the offset when clicking "Previous". Make sure
+		// a previous page is available beforehand. If none is, 
+		// do nothing.
+		} else if (direction < 0) {
+			if (this.state.offset != 0) {
+				newOffset = this.state.offset - RESULTS_PER_PAGE;
+			} else {
+				return;
+			}
+		}
+		this.setState({offset: newOffset});
 		this.setState({loading: true, siteMode: Mode.SEARCH});
 		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query" + 
 			"&format=json&list=search&srsearch=" + this.state.query + 
-			"&srprop=snippet&srlimit=20")
+			"&srprop=snippet&srlimit=20&continue&sroffset=" + newOffset)
 			.then(response => response.json())
 			.catch(err => {
 				console.log(err);
@@ -269,7 +285,7 @@ class App extends React.Component {
 			this.setState({
 				loading: false,
 				title: "Search Failed",
-				results: "Could not contact the Wikipedia API. Please check your internet connection and try again."
+				results: "Could not contact Wikipedia. Please check your internet connection and try again."
 			});	
 		});
 	}
@@ -289,6 +305,7 @@ class App extends React.Component {
 						);
 		const head = (
 							<Header 
+								offset={this.state.offset}
 								onFormChange={this.handleFormChange}
 								onFormSubmit={this.handleFormSubmit}
 								onLogoClick={this.handleLogoClick}
@@ -302,14 +319,19 @@ class App extends React.Component {
 		const search =	(
 							<main>
 								<SearchResults
+									offset={this.state.offset}
+									results={this.state.results}
 									title={this.state.title}
 									onCardClick={this.handleCardClick}
-									results={this.state.results}
+									onNextClick={this.handleFormSubmit}
+									onPreviousClick={this.handleFormSubmit}
 								/>
 								<button 
 									className="jumpTop"
 									onClick={() => window.scrollTo(0, 0)}
-									>^</button>
+									><svg className="arrowBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5.362 3.528">
+										<path d="M2.681.847L.762 3.527H0L2.512 0h.338l2.512 3.528H4.6z"/>
+									</svg></button>
 							</main>
 						);
 		const read =	(
@@ -322,7 +344,9 @@ class App extends React.Component {
 								<button 
 									className="jumpTop"
 									onClick={() => window.scrollTo(0, 0)}
-									>^</button>
+									><svg className="arrowBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5.362 3.528">
+										<path d="M2.681.847L.762 3.527H0L2.512 0h.338l2.512 3.528H4.6z"/>
+									</svg></button>
 							</main>
 						);
 		return (

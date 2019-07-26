@@ -3,36 +3,44 @@ import React from "react"
 class SearchResults extends React.Component {
 	constructor(props) {
 		super(props);
-		this.handleClick = this.handleClick.bind(this);
-	}
-	
-	handleClick(event) {
-		//this.props.onCardClick(event.target.value.data-pageid);
-		console.log(event.target.getAttribute("data-pageid"));
-		//console.log(event.target.class);
+		this.handleNextClick = this.handleNextClick.bind(this);
+		this.handlePreviousClick = this.handlePreviousClick.bind(this);
 	}
 	
 	componentDidMount() {
 		window.scrollTo(0, 0);
 	}
 	
+	handleNextClick(event) {
+		//this.setState({offset: this.props.offset + 20});
+		this.props.onNextClick(this.props.offset, 1);
+	}
+	
+	handlePreviousClick(event) {
+		this.props.onNextClick(this.props.offset, -1);
+	}
+	
 	render() {
-		return (
-			<section className="searchResults">
-				<h1 className="pageTitle">{this.props.title}</h1>
-				{this.props.results}
+		const navigation = (
 				<nav className="resultsNav">
-					<button>
+					<button onClick={this.handlePreviousClick}>
 						<svg className="loadPrevious arrowBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3.528 5.362">
 							<path d="M.847 2.681l2.68 1.92v.761L0 2.85v-.338L3.528 0v.762z"/>
 						</svg>Previous
 					</button>
-					<button>Next
+					<button onClick={this.handleNextClick}>Next
 						<svg className="loadNext arrowBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3.528 5.362">
 							<path d="M2.681 2.681L0 .762V0l3.528 2.512v.338L0 5.362V4.6z"/>
 						</svg>
 					</button>
 				</nav>
+			);
+			
+		return (
+			<section className="searchResults">
+				<h1 className="pageTitle">{this.props.title}</h1>
+				{this.props.results}
+				{this.props.results[0].type && navigation}
 			</section>
 		)
 	}	
