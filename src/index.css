@@ -411,7 +411,7 @@ h1, h2, h3, h4, h5 {
 }
 
 h1, h2 {
-	font-family: 'Jost*','Futura','Verdana',sans-serif;
+	font-family: 'Jost*','Futura',sans-serif;
 	letter-spacing: 0.13rem;
 	margin: 2.3125rem 0 1.4375rem 0;
 	text-transform: uppercase;
@@ -438,7 +438,7 @@ form {
 	align-items: center;
 	display: flex;
 	flex-flow: row wrap;
-	font-family: 'Jost*','Futura','Verdana',sans-serif;
+	font-family: 'Jost*','Futura',sans-serif;
 	justify-content: flex-end;
 }
 
@@ -490,7 +490,7 @@ a {
 		0 3px 8px rgba(198,195,196,0.8);
 	display: flex;
 	flex-flow: row wrap;
-	font-family: 'Jost*', 'Futura', 'Verdana', sans-serif;
+	font-family: 'Jost*', 'Futura', sans-serif;
 	justify-content: space-between;
 	padding: 0.4rem 4vw;
 }
@@ -553,7 +553,7 @@ a {
 .landingCopy {
 	/*font-style: italic;*/
 	align-self: flex-end;
-	font-family: 'Jost*','Futura','Verdana',sans-serif;
+	font-family: 'Jost*','Futura',sans-serif;
 	margin-bottom: 2.25rem;
 	opacity: 0.88;
 	padding-bottom: 0.25rem;
@@ -616,15 +616,15 @@ a {
 
 .resultCard p {
 	/*font-style: italic;*/
-	font-family: 'Jost*';
+	font-family: 'Jost*','Futura',sans-serif;
 }
 
 .resultsNav {
 
 	display: flex;
 	flex-flow: row wrap;
-    font-family: 'Jost*','Futura','Verdana',sans-serif;
-	justify-content: space-between;
+    font-family: 'Jost*','Futura',sans-serif;
+	justify-content: space-around;
 	margin: 0 6px 1rem 6px;
 
 }
@@ -698,7 +698,7 @@ a {
     /*background-color: #c6c5c4;*/
 	background-color: #d6d5d4;
 	border-top: 6px solid #d2eac5;
-	font-family: 'Jost*','Futura','Verdana',sans-serif;
+	font-family: 'Jost*','Futura',sans-serif;
 	padding: 0.5rem 4vw;
 }
 

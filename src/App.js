@@ -34,7 +34,8 @@ class App extends React.Component {
 			query: null,
 			results: null,
 			siteMode: Mode.LAND,
-			title: null
+			title: null,
+			totalHits: 0
 		};
 		this.handleFormChange = this.handleFormChange.bind(this);
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -223,17 +224,20 @@ class App extends React.Component {
 	handleFormSubmit(offset, direction) {
 		let newOffset = 0;
 		// Advance the offset when clicking "Next".
-		// TODO: Make sure a next page is available.
 		if (direction > 0) {
-			newOffset = this.state.offset + RESULTS_PER_PAGE;
+			if (this.state.offset + RESULTS_PER_PAGE <= this.state.totalHits) {
+				newOffset = this.state.offset + RESULTS_PER_PAGE;
+			} else {
+				return;
+		}
 		// Decrement the offset when clicking "Previous". Make sure
 		// a previous page is available beforehand. If none is, 
 		// do nothing.
 		} else if (direction < 0) {
-			if (this.state.offset != 0) {
+			if (this.state.offset - RESULTS_PER_PAGE > 0) {
 				newOffset = this.state.offset - RESULTS_PER_PAGE;
 			} else {
-				return;
+				newOffset = 0;	
 			}
 		}
 		this.setState({offset: newOffset});
@@ -247,15 +251,17 @@ class App extends React.Component {
 				return Promise.reject(err);
 			})
 			.then(response => {
-				if (response.query.searchinfo.totalhits === 0) {
+				const resultTotal = response.query.searchinfo.totalhits;
+				if (resultTotal === 0) {
 					this.setState(
 						{
 						loading: false,
-						title: "Search Failed",
 						results: "Your search for '" + this.state.query +
-							"' yielded zero results. Please try again."});
+							"' yielded zero results. Please try again.",
+						title: "Search Failed"});
 					return;
 				}
+				this.setState({totalHits: resultTotal});
 				const searchResults = response.query.search.map((result,index) => {
 					const cardTitle = result.title;
 					//console.log(result);
@@ -276,6 +282,9 @@ class App extends React.Component {
 				});
 				this.setState({
 					loading: false,
+					subTitle: "Showing " + (this.state.offset + 1) + " - " + 
+						Math.min(this.state.offset + RESULTS_PER_PAGE,this.state.totalHits) +
+						" out of " + this.state.totalHits,
 					title: "Search Results for '" + this.state.query + "'",
 					results: searchResults});
 			}
@@ -321,7 +330,9 @@ class App extends React.Component {
 								<SearchResults
 									offset={this.state.offset}
 									results={this.state.results}
+									subTitle={this.state.subTitle}
 									title={this.state.title}
+									totalHits={this.state.totalHits}
 									onCardClick={this.handleCardClick}
 									onNextClick={this.handleFormSubmit}
 									onPreviousClick={this.handleFormSubmit}
