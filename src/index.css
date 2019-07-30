@@ -654,6 +654,35 @@ a {
 	margin-right: 0.4rem;
 }
 
+.pageHeader {
+	display: flex;
+	flex-flow: column wrap;
+	align-items: center;
+}
+
+.contentsTable {
+	display: flex;
+	flex-flow: column wrap;
+
+}
+
+.contentsTableTitle {
+	letter-spacing: 0;
+	line-height: 1.563rem;
+	margin: 0;
+	text-transform: unset;
+}
+
+.tableOfContents {
+	font-family: 'Jost*','Futura',sans-serif;
+	line-height: 1.563rem;
+	margin: 0;
+}
+
+.pageTextWrap {
+	margin-top: 0.68rem;
+}
+
 .beneathP {
 	margin-top: -0.4774rem;
 }

@@ -12,8 +12,18 @@ class Page extends React.Component {
 	render() {
 		return (
 			<article className="pageText">
-				<h1 className="pageTitle">{this.props.title}</h1>
-				{this.props.pageText}
+				<header className="pageHeader">
+					<h1 className="pageTitle">{this.props.title}</h1>
+					<nav className="contentsTable">
+						<h2 className="contentsTableTitle">Table of Contents V</h2>
+						<ul className="tableOfContents">
+							{this.props.tableOfContents}
+						</ul>
+					</nav>
+				</header>
+				<div className="pageTextWrap">
+					{this.props.pageText}
+				</div>
 				<footer className="pageFooter">
 					Read more at <a href={this.props.pageLink}>Wikipedia.org</a>.
 				</footer>

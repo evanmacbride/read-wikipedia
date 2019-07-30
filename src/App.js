@@ -34,6 +34,7 @@ class App extends React.Component {
 			query: null,
 			results: null,
 			siteMode: Mode.LAND,
+			tableOfContents: null,
 			title: null,
 			totalHits: 0
 		};
@@ -104,6 +105,7 @@ class App extends React.Component {
 				// of identical h tags would be a header for an empty section.
 				let lastTag = '';
 				let deleteList = [];
+				let contentsTableList = [];
 				
 				// Use breaklist to catch header text that indicates the main
 				// text has ended.
@@ -186,7 +188,9 @@ class App extends React.Component {
 						const find = "==";
 						const re = new RegExp(find, 'g');
 						text = text.replace(re, '').trim();
-						return <h2 key={index}>{text}</h2>;						
+						const linkText = "#" + text;
+						contentsTableList.push(<li key={index + text}><a href={linkText}>{text}</a></li>);
+						return <h2 id={text} key={index}>{text}</h2>;						
 					}
 					lastTag = "p";
 					beneathP = true;
@@ -206,7 +210,8 @@ class App extends React.Component {
 				}
 				this.setState({
 					pageLink: "https://en.wikipedia.org/?curid=" + id,
-					pageText: textArray
+					pageText: textArray,
+					tableOfContents: contentsTableList
 				})
 			}
 		)
@@ -348,6 +353,7 @@ class App extends React.Component {
 		const read =	(
 							<main>
 								<Page 
+									tableOfContents={this.state.tableOfContents}
 									title={this.state.title}
 									pageLink={this.state.pageLink}
 									pageText={this.state.pageText}
