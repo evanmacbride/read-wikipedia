@@ -33,6 +33,7 @@ class App extends React.Component {
 			pageText: null,
 			query: null,
 			results: null,
+			showContentsList: false,
 			siteMode: Mode.LAND,
 			tableOfContents: null,
 			title: null,
@@ -42,6 +43,7 @@ class App extends React.Component {
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
 		this.handleCardClick = this.handleCardClick.bind(this);
 		this.handleLogoClick = this.handleLogoClick.bind(this);
+		this.handleShowTableClick = this.handleShowTableClick.bind(this);
 	}
 	
 	handleFormChange(text) {
@@ -107,6 +109,7 @@ class App extends React.Component {
 				let deleteList = [];
 				let contentsTableList = [];
 				
+				
 				// Use breaklist to catch header text that indicates the main
 				// text has ended.
 				const breakList = ["== GALLERY ==", "== NOTES ==", 
@@ -116,10 +119,15 @@ class App extends React.Component {
 				
 				//let textArray = responseText.split(/[\r\n]+/).map((text, index) => {
 				let textArray = responseText.split(/[\r\n|\r|\n]+/).map((text, index) => {	
+					// Keep track of whether or not to include an h tag in the
+					// table of contents.
+					let goodLink = true;
+				
 					// Ignore text that's all whitespace or a single character or word.
 					text = text.trim();
 					if (breakList.indexOf(text.toUpperCase()) > -1) {
 						breakPoints.push(index);
+						goodLink = false;
 					}
 					if (!text.includes(" ")) {
 						return null;
@@ -183,13 +191,16 @@ class App extends React.Component {
 					else if (text.includes("==")) {
 						if (lastTag === "h2") {
 							deleteList.push(index - 1);
+							goodLink = false;
 						}
 						lastTag = "h2";
 						const find = "==";
 						const re = new RegExp(find, 'g');
 						text = text.replace(re, '').trim();
-						const linkText = "#" + text;
-						contentsTableList.push(<li key={index + text}><a href={linkText}>{text}</a></li>);
+						if (goodLink) {
+							const linkText = "#" + text;
+							contentsTableList.push(<li key={index + text}><a href={linkText}>{text}</a></li>);
+						}
 						return <h2 id={text} key={index}>{text}</h2>;						
 					}
 					lastTag = "p";
@@ -308,6 +319,10 @@ class App extends React.Component {
 		this.setState({siteMode: Mode.LAND});
 	}
 	
+	handleShowTableClick() {
+		this.setState((prev) => ({showContentsList: !prev.showContentsList}));
+	}
+	
 	render() {
 		const land = (	
 							<main className="landingMain">
@@ -357,6 +372,8 @@ class App extends React.Component {
 									title={this.state.title}
 									pageLink={this.state.pageLink}
 									pageText={this.state.pageText}
+									showContentsList={this.state.showContentsList}
+									onShowTableClick={this.handleShowTableClick}
 								/>
 								<button 
 									className="jumpTop"

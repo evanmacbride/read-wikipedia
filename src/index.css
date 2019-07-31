@@ -668,18 +668,31 @@ a {
 
 .contentsTableTitle {
 	letter-spacing: 0;
-	line-height: 1.563rem;
+	line-height: 2rem;
 	margin: 0;
 	text-transform: unset;
 }
 
 .tableOfContents {
 	font-family: 'Jost*','Futura',sans-serif;
-	line-height: 1.563rem;
+	line-height: 2rem;
 	margin: 0;
 }
 
-.pageTextWrap {
+.contentsTable button {
+	background: none;
+	border: none;
+	display: inline;
+	margin: 0;
+	width: unset;
+}
+
+.tableCaret {
+	fill: #44a50a;
+	height: 0.465rem;
+}
+
+.pageText p:first-of-type {
 	margin-top: 0.68rem;
 }
 
