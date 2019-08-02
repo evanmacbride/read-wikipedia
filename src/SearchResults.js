@@ -1,4 +1,5 @@
 import React from "react"
+import JumpToTop from "./JumpToTop"
 
 const RESULTS_PER_PAGE = 20;
 
@@ -41,11 +42,14 @@ class SearchResults extends React.Component {
 			);
 			
 		return (
-			<section className="searchResults">
-				<h1 className="pageTitle">{this.props.title}<br/>{this.props.subTitle}</h1>
-				{this.props.results}
-				{this.props.results[0].type && navigation}
-			</section>
+			<main>
+				<section className="searchResults">
+					<h1 className="pageTitle">{this.props.title}<br/>{this.props.subTitle}</h1>
+					{this.props.results}
+					{this.props.results[0].type && navigation}
+				</section>
+				<JumpToTop showJumpButton={this.props.showJumpButton} />
+			</main>
 		)
 	}	
 }

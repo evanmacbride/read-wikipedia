@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Read Wikipedia",
+  "name": "Read Wikipedia. The simple, text-only Wikipedia reader.",
   "icons": [
     {
       "src": "favicon.ico",

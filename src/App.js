@@ -23,6 +23,22 @@ const Mode = {
 
 const RESULTS_PER_PAGE = 20;
 
+function getDocHeight() {
+    return Math.max(
+        document.body.scrollHeight, document.documentElement.scrollHeight,
+        document.body.offsetHeight, document.documentElement.offsetHeight,
+        document.body.clientHeight, document.documentElement.clientHeight
+    );
+}
+
+function getWindowTop() {
+	return window.pageYOffset || document.documentElement.scrollTop;
+}
+
+function getWindowHeight() {
+	return window.innerHeight || document.documentElement.offsetHeight;
+}
+
 class App extends React.Component {
 	constructor() {
 		super();
@@ -34,7 +50,9 @@ class App extends React.Component {
 			query: null,
 			results: null,
 			showContentsList: false,
+			showJumpButton: false,
 			siteMode: Mode.LAND,
+			subTitle: null,
 			tableOfContents: null,
 			title: null,
 			totalHits: 0
@@ -44,6 +62,17 @@ class App extends React.Component {
 		this.handleCardClick = this.handleCardClick.bind(this);
 		this.handleLogoClick = this.handleLogoClick.bind(this);
 		this.handleShowTableClick = this.handleShowTableClick.bind(this);
+	}
+	
+	componentDidMount() {
+		const self = this;
+		window.onscroll = function(e) {
+			if (getWindowTop() === 0 || (getWindowTop() + getWindowHeight()) >= getDocHeight()) {
+				self.setState({showJumpButton:false});
+			} else {
+				self.setState({showJumpButton:true});
+			}
+		};		
 	}
 	
 	handleFormChange(text) {
@@ -70,6 +99,7 @@ class App extends React.Component {
 					this.setState(
 						{loading: false,
 						title: "Search Failed",
+						subTitle: null,
 						pageText: "Could not retrieve page id " + id + ". Please try again."});
 					return;
 				}
@@ -114,7 +144,8 @@ class App extends React.Component {
 				// text has ended.
 				const breakList = ["== GALLERY ==", "== NOTES ==", 
 					"== REFERENCES ==",	"== EXTERNAL LINKS ==", "== SEE ALSO ==",
-					"== SELECTED BIBLIOGRAPHY ==", "== BIBLIOGRAPHY =="];
+					"== FURTHER READING ==", "== SELECTED BIBLIOGRAPHY ==", 
+					"== BIBLIOGRAPHY ==", "== FOOTNOTES =="];
 				const breakPoints = [];
 				
 				//let textArray = responseText.split(/[\r\n]+/).map((text, index) => {
@@ -231,6 +262,7 @@ class App extends React.Component {
 			this.setState(
 				{loading:false,
 				title: "Search Failed",
+				subTitle: null,
 				pageText: "Could not contact Wikipedia. Please check your internet connection and try again."});	
 		}
 		);
@@ -274,6 +306,7 @@ class App extends React.Component {
 						loading: false,
 						results: "Your search for '" + this.state.query +
 							"' yielded zero results. Please try again.",
+						subTitle: null,
 						title: "Search Failed"});
 					return;
 				}
@@ -310,6 +343,7 @@ class App extends React.Component {
 			this.setState({
 				loading: false,
 				title: "Search Failed",
+				subTitle: null,
 				results: "Could not contact Wikipedia. Please check your internet connection and try again."
 			});	
 		});
@@ -346,42 +380,28 @@ class App extends React.Component {
 							</main>
 						);
 		const search =	(
-							<main>
-								<SearchResults
-									offset={this.state.offset}
-									results={this.state.results}
-									subTitle={this.state.subTitle}
-									title={this.state.title}
-									totalHits={this.state.totalHits}
-									onCardClick={this.handleCardClick}
-									onNextClick={this.handleFormSubmit}
-									onPreviousClick={this.handleFormSubmit}
-								/>
-								<button 
-									className="jumpTop"
-									onClick={() => window.scrollTo(0, 0)}
-									><svg className="arrowBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5.362 3.528">
-										<path d="M2.681.847L.762 3.527H0L2.512 0h.338l2.512 3.528H4.6z"/>
-									</svg></button>
-							</main>
+							<SearchResults
+								offset={this.state.offset}
+								results={this.state.results}
+								showJumpButton={this.state.showJumpButton}
+								subTitle={this.state.subTitle}
+								title={this.state.title}
+								totalHits={this.state.totalHits}
+								onCardClick={this.handleCardClick}
+								onNextClick={this.handleFormSubmit}
+								onPreviousClick={this.handleFormSubmit}
+							/>
 						);
 		const read =	(
-							<main>
-								<Page 
-									tableOfContents={this.state.tableOfContents}
-									title={this.state.title}
-									pageLink={this.state.pageLink}
-									pageText={this.state.pageText}
-									showContentsList={this.state.showContentsList}
-									onShowTableClick={this.handleShowTableClick}
-								/>
-								<button 
-									className="jumpTop"
-									onClick={() => window.scrollTo(0, 0)}
-									><svg className="arrowBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5.362 3.528">
-										<path d="M2.681.847L.762 3.527H0L2.512 0h.338l2.512 3.528H4.6z"/>
-									</svg></button>
-							</main>
+							<Page 
+								tableOfContents={this.state.tableOfContents}
+								title={this.state.title}
+								pageLink={this.state.pageLink}
+								pageText={this.state.pageText}
+								showContentsList={this.state.showContentsList}
+								showJumpButton={this.state.showJumpButton}
+								onShowTableClick={this.handleShowTableClick}
+							/>
 						);
 		return (
 			<div className="wrap">

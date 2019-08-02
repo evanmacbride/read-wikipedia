@@ -400,7 +400,7 @@ main {
 	display: flex;
 	flex-flow: column wrap;
 	height: unset;
-    min-height: 460px;
+    min-height: calc(100% - 5.59rem);
 	/*width: 100vw;*/
 }
 
@@ -510,7 +510,7 @@ a {
 }
 
 .landingMain {
-	height: calc(100% - 2.625rem);
+	height: calc(100% - 2.79rem);
 }
 
 .landing {
@@ -574,9 +574,9 @@ a {
 	to {opacity: 1;}
 }
 
-.loadingMain {
+/*.loadingMain {
 	height: calc(100% - 5.425rem);
-}
+}*/
 
 .loadingMessage {
 	animation: pulse 3s 0.5s infinite alternate;
@@ -668,33 +668,38 @@ a {
 
 .contentsTableTitle {
 	letter-spacing: 0;
-	line-height: 2rem;
-	margin: 0;
+	line-height: 1.25rem;
+	margin: 0 0 1rem 0;
 	text-transform: unset;
 }
 
 .tableOfContents {
 	font-family: 'Jost*','Futura',sans-serif;
-	line-height: 2rem;
+	line-height: 1.25rem;
 	margin: 0;
+}
+
+.tableOfContents li {
+	margin-bottom: 1rem;
 }
 
 .contentsTable button {
 	background: none;
 	border: none;
 	display: inline;
+	height: auto;
 	margin: 0;
-	width: unset;
+	width: 1rem;
 }
 
 .tableCaret {
-	fill: #44a50a;
-	height: 0.465rem;
+	fill: #8ab16f;
+	height: 0.59rem;
 }
 
-.pageText p:first-of-type {
+/*.pageText p:first-of-type {
 	margin-top: 0.68rem;
-}
+}*/
 
 .beneathP {
 	margin-top: -0.4774rem;
@@ -737,11 +742,14 @@ a {
 }
 
 .siteFooter {
-    /*background-color: #c6c5c4;*/
-	background-color: #d6d5d4;
-	border-top: 6px solid #d2eac5;
+    /*background-color: #c6c5c4;
+	background-color: #d6d5d4;*/
+	background-color: #c3cdcc;
+	/*border-top: 6px solid #d2eac5;*/
+	border-top: 7px solid #d2eac5;
 	font-family: 'Jost*','Futura',sans-serif;
-	padding: 0.5rem 4vw;
+	/*padding: 0.5rem 4vw;*/
+	padding: 0.55rem 4vw;
 }
 
 /* PRINT STYLES */
