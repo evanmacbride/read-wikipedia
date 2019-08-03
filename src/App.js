@@ -47,7 +47,7 @@ class App extends React.Component {
 			offset: 0,
 			pageLink: null,
 			pageText: null,
-			query: null,
+			query: '',
 			results: null,
 			showContentsList: false,
 			showJumpButton: false,
@@ -72,7 +72,7 @@ class App extends React.Component {
 			} else {
 				self.setState({showJumpButton:true});
 			}
-		};		
+		};
 	}
 	
 	handleFormChange(text) {
@@ -100,6 +100,7 @@ class App extends React.Component {
 						{loading: false,
 						title: "Search Failed",
 						subTitle: null,
+						showContentsList: false,
 						pageText: "Could not retrieve page id " + id + ". Please try again."});
 					return;
 				}
@@ -263,6 +264,7 @@ class App extends React.Component {
 				{loading:false,
 				title: "Search Failed",
 				subTitle: null,
+				showContentsList: false,
 				pageText: "Could not contact Wikipedia. Please check your internet connection and try again."});	
 		}
 		);
@@ -335,6 +337,7 @@ class App extends React.Component {
 						Math.min(this.state.offset + RESULTS_PER_PAGE,this.state.totalHits) +
 						" out of " + this.state.totalHits,
 					title: "Search Results for '" + this.state.query + "'",
+					showContentsList: false,
 					results: searchResults});
 			}
 		)
@@ -350,7 +353,21 @@ class App extends React.Component {
 	}
 	
 	handleLogoClick() {
-		this.setState({siteMode: Mode.LAND});
+		this.setState({
+			siteMode: Mode.LAND,
+			loading: false,
+			offset: 0,
+			pageLink: null,
+			pageText: null,
+			query: '',
+			results: null,
+			showContentsList: false,
+			showJumpButton: false,
+			subTitle: null,
+			tableOfContents: null,
+			title: null,
+			totalHits: 0
+		});
 	}
 	
 	handleShowTableClick() {
@@ -361,6 +378,7 @@ class App extends React.Component {
 		const land = (	
 							<main className="landingMain">
 								<Landing 
+									query={this.state.query}
 									onFormChange={this.handleFormChange}
 									onFormSubmit={this.handleFormSubmit}		
 								/>
@@ -369,6 +387,7 @@ class App extends React.Component {
 		const head = (
 							<Header 
 								offset={this.state.offset}
+								query={this.state.query}
 								onFormChange={this.handleFormChange}
 								onFormSubmit={this.handleFormSubmit}
 								onLogoClick={this.handleLogoClick}

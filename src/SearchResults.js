@@ -44,7 +44,9 @@ class SearchResults extends React.Component {
 		return (
 			<main>
 				<section className="searchResults">
-					<h1 className="pageTitle">{this.props.title}<br/>{this.props.subTitle}</h1>
+					<h1 className="pageTitle">{this.props.title}<br/>
+						<span className="resultsDetails">{this.props.subTitle}</span>
+					</h1>
 					{this.props.results}
 					{this.props.results[0].type && navigation}
 				</section>

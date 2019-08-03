@@ -32,7 +32,10 @@ class Landing extends React.Component {
 					<p className="landingCopy">The simple, text-only Wikipedia reader</p>
 				</div>
 				<form onSubmit={this.handleSubmit}>
-					<input onChange={this.handleChange} />
+					<input 
+						value={this.props.query}
+						onChange={this.handleChange} 
+					/>
 					<button>
 						<svg className="searchIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 							<title>Search</title>

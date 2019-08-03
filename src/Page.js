@@ -24,7 +24,7 @@ class Page extends React.Component {
 						<h1 className="pageTitle">{this.props.title}</h1>
 						{(this.props.tableOfContents && this.props.tableOfContents.length > 1) && 
 						(<nav className="contentsTable">
-							<h2 className="contentsTableTitle">Table of Contents <button 
+							<h2 className="contentsTableTitle">Table of Contents<button 
 								title="Toggle table of contents"
 								onClick={this.handleShowTableClick}
 									>

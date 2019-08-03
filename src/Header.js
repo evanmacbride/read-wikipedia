@@ -19,7 +19,6 @@ class Header extends React.Component {
 	handleSubmit(event) {
 		//this.props.onFormSubmit(event.target.value);
 		this.props.onFormSubmit(this.props.offset, 0);
-		console.log('Hello again!');
 		event.preventDefault();
 	}
 	
@@ -28,7 +27,9 @@ class Header extends React.Component {
 			<header className="banner">
 				<h1 className="logo" onClick={this.handleClick}>Read<br/>Wiki<br/>Pedia</h1>
 				<form onSubmit={this.handleSubmit}>
-					<input onChange={this.handleChange} />
+					<input
+						value={this.props.query}
+						onChange={this.handleChange} />
 					<button>
 						<svg className="searchIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 							<title>Search</title>
