@@ -140,13 +140,13 @@ class App extends React.Component {
 				let deleteList = [];
 				let contentsTableList = [];
 				
-				
 				// Use breaklist to catch header text that indicates the main
 				// text has ended.
 				const breakList = ["== GALLERY ==", "== NOTES ==", 
-					"== REFERENCES ==",	"== EXTERNAL LINKS ==", "== SEE ALSO ==",
-					"== FURTHER READING ==", "== SELECTED BIBLIOGRAPHY ==", 
-					"== BIBLIOGRAPHY ==", "== FOOTNOTES =="];
+					"== REFERENCES ==",	"== EXTERNAL LINKS ==", 
+					"== SEE ALSO ==", "== FURTHER READING ==", 
+					"== SELECTED BIBLIOGRAPHY ==", "== BIBLIOGRAPHY ==",
+					"== FOOTNOTES ==", "== FILMOGRAPHY =="];
 				const breakPoints = [];
 				
 				//let textArray = responseText.split(/[\r\n]+/).map((text, index) => {

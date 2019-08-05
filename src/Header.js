@@ -25,7 +25,11 @@ class Header extends React.Component {
 	render() {
 		return (
 			<header className="banner">
-				<h1 className="logo" onClick={this.handleClick}>Read<br/>Wiki<br/>Pedia</h1>
+				<h1 className="bannerLogo" onClick={this.handleClick}>
+					Read<br/>
+					<span className="bannerLogoWordWiki">Wiki</span><br/>
+					Pedia
+				</h1>
 				<form onSubmit={this.handleSubmit}>
 					<input
 						value={this.props.query}

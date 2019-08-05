@@ -496,12 +496,26 @@ a {
 	padding: 0.4rem 4vw;
 }
 
-.banner h1 {
+.bannerLogo {
 	/*color: #21440d;*/
-	color: black;
+	/*color: black;*/
 	font-size: 0.6875rem;
 	line-height: 0.9;
 	margin: 0;
+}
+
+.bannerLogoWordWiki {
+    margin: -0.06rem;
+    letter-spacing: 0.145rem;	
+}
+
+.bannerLogo:hover {
+	cursor: pointer;
+}
+
+.banner input {
+	width: 250px;
+	max-width: 48vw;
 }
 
 .searchIcon {
@@ -669,15 +683,16 @@ a {
 }
 
 .contentsTable {
+	align-self: flex-start;
 	display: flex;
 	flex-flow: column wrap;
-
 }
 
 .contentsTableTitle {
+	color: #3f8118;
 	letter-spacing: 0;
 	line-height: 1.25rem;
-	margin: 0 0 1rem 0;
+	margin: 0 0 0.773rem 0;
 	text-transform: unset;
 }
 
