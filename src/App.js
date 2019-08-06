@@ -272,6 +272,8 @@ class App extends React.Component {
 	
 	// Return srlimit pages that match query
 	handleFormSubmit(offset, direction) {
+		// Clear any bookmarks from browser address bar
+		window.history.pushState({},'','/');
 		let newOffset = 0;
 		// Advance the offset when clicking "Next".
 		if (direction > 0) {
@@ -353,6 +355,8 @@ class App extends React.Component {
 	}
 	
 	handleLogoClick() {
+		// Clear any bookmarks from browser address bar
+		window.history.pushState({},'','/');
 		this.setState({
 			siteMode: Mode.LAND,
 			loading: false,
