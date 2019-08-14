@@ -15,7 +15,6 @@ class SearchResults extends React.Component {
 	}
 	
 	handleNextClick(event) {
-		//this.setState({offset: this.props.offset + 20});
 		this.props.onNextClick(this.props.offset, 1);
 	}
 	

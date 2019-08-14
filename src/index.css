@@ -352,30 +352,35 @@ ul {
 	font-family: "Andada";
 	src:	local("Andada"),
 			local("Andada ht Pro"),
-			url("fonts/Andada-Regular.otf") format("opentype");
+			url("fonts/andada-regular-webfont.woff2") format("woff2"),
+			url("fonts/andada-regular-webfont.woff") format("woff");
 }
 @font-face {
 	font-family: "Andada";
 	src:	local("Andada Italic"),
 			local("Andada ht Pro Italic"),
-			url("fonts/Andada-Italic.otf") format("opentype");
+			url("fonts/andada-italic-webfont.woff2") format("woff2"),
+			url("fonts/andada-italic-webfont.woff") format("woff");
 	font-style: italic;
 }
 @font-face {
 	font-family: "Andada SC";
 	src:	local("Andada SC"),
 			local("Andada ht Pro SC"),
-			url("fonts/AndadaSC-Regular.otf") format("opentype");
+			url("fonts/andadasc-regular-webfont.woff2") format("woff2"),
+			url("fonts/andadasc-regular-webfont.woff") format("woff");
 }
 @font-face {
 	font-family: "Jost*";
 	src:	local("Jost*"),
-			url("fonts/Jost-400-Book.otf") format("opentype");
+			url("fonts/jost-400-book-webfont.woff2") format("woff2"),
+			url("fonts/jost-400-book-webfont.woff") format("woff");
 }
 @font-face {
 	font-family: "Jost*";
 	src:	local("Jost* Thin"),
-			url("fonts/Jost-200-Thin.otf") format("opentype");
+			url("fonts/jost-200-thin-webfont.woff2") format("woff2"),
+			url("fonts/jost-200-thin-webfont.woff") format("woff");
 	font-weight: 200;
 }
 
