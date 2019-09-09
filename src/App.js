@@ -3,6 +3,7 @@ import Landing from "./Landing"
 import Page from "./Page"
 import Header from "./Header"
 import SearchResults from "./SearchResults"
+import About from "./About"
 
 // Find the asset that includes the query name in its title. If no
 // asset contains the query name, return the first one in the array.
@@ -18,7 +19,8 @@ import SearchResults from "./SearchResults"
 const Mode = {
 	LAND: 0,
 	SEARCH: 1,
-	READ: 2
+	READ: 2,
+	ABOUT: 3
 };
 
 const RESULTS_PER_PAGE = 20;
@@ -63,7 +65,7 @@ class App extends React.Component {
 		this.handleLogoClick = this.handleLogoClick.bind(this);
 		this.handleShowTableClick = this.handleShowTableClick.bind(this);
 	}
-	
+
 	componentDidMount() {
 		const self = this;
 		window.onscroll = function(e) {
@@ -74,19 +76,19 @@ class App extends React.Component {
 			}
 		};
 	}
-	
+
 	handleFormChange(text) {
 		this.setState({
 			query: text
-		});		
+		});
 	}
-	
+
 	// TODO: Remove code examples and elide the p tags they separate. Only
 	// fetch page after user clicks the associated page card.
-	
+
 	handleCardClick(id) {
 		this.setState({loading: true, siteMode: Mode.READ});
-		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&pageids=" + 
+		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&pageids=" +
 			id + "&format=json&redirects&explaintext")
 			.then(response => response.json())
 			.catch(err => {
@@ -104,57 +106,57 @@ class App extends React.Component {
 						pageText: "Could not retrieve page id " + id + ". Please try again."});
 					return;
 				}
-				
+
 				// Get the title
 				this.setState({title: Object.values(response.query.pages)[0].title});
 				// Process the text.
-				
+
 				// Restore newlines lost by ignoring footnotes. (Insert a
 				// newline into elisions between lowercase letters, a period,
 				// and an uppercase letter.)
 				let responseText = Object.values(response.query.pages)[0].extract;
-				
+
 				responseText = responseText.replace(/ {2,}/g, ' ');
 				responseText = responseText.replace(/(\S"?'?\)?\."?\)?)(\(?'?"?[A-Z][^.])/g,'$1\n$2');
 				// Catch paragraphs ending in a quote
 				responseText = responseText.replace(/('?\.")([A-Z])/g,'$1\n$2');
-				
+
 				// Remove pronunciation guides
 				responseText = responseText.replace(/ \( ?[A-Z].*:.*\)/g, '');
 				responseText = responseText.replace(/ \(.*listen.*\)/g, '');
 				responseText = responseText.replace(/ \( +\S+ +\)/g, '');
-				
+
 				// Remove artifacts from code examples
 				responseText = responseText.replace(/^ *\{.*displaystyle.*\} *$/g, '');
-				
+
 				// Use booleans to apply appropriate classes to set margins
-				// to keep the baseline grid before and after h 
+				// to keep the baseline grid before and after h
 				// tags maintained.
 				let beneathH3 = false;
 				let beneathP = false;
-				
+
 				// Use lastTag and deleteList to detect identical adjacent h
 				// tags and flag them for removal. All but the last of a set
 				// of identical h tags would be a header for an empty section.
 				let lastTag = '';
 				let deleteList = [];
 				let contentsTableList = [];
-				
+
 				// Use breaklist to catch header text that indicates the main
 				// text has ended.
-				const breakList = ["== GALLERY ==", "== NOTES ==", 
-					"== REFERENCES ==",	"== EXTERNAL LINKS ==", 
-					"== SEE ALSO ==", "== FURTHER READING ==", 
+				const breakList = ["== GALLERY ==", "== NOTES ==",
+					"== REFERENCES ==",	"== EXTERNAL LINKS ==",
+					"== SEE ALSO ==", "== FURTHER READING ==",
 					"== SELECTED BIBLIOGRAPHY ==", "== BIBLIOGRAPHY ==",
 					"== FOOTNOTES ==", "== FILMOGRAPHY =="];
 				const breakPoints = [];
-				
+
 				//let textArray = responseText.split(/[\r\n]+/).map((text, index) => {
-				let textArray = responseText.split(/[\r\n|\r|\n]+/).map((text, index) => {	
+				let textArray = responseText.split(/[\r\n|\r|\n]+/).map((text, index) => {
 					// Keep track of whether or not to include an h tag in the
 					// table of contents.
 					let goodLink = true;
-				
+
 					// Ignore text that's all whitespace or a single character or word.
 					text = text.trim();
 					if (breakList.indexOf(text.toUpperCase()) > -1) {
@@ -165,19 +167,19 @@ class App extends React.Component {
 						return null;
 					}
 					else if (text.includes("=====")) {
-						
+
 						// Catch identical adjacent h tags
 						if (lastTag === "h5") {
 							deleteList.push(index - 1);
 						}
 						lastTag = "h5";
-						
+
 						// Remove old formatting and apply new h tag
 						const find = "=====";
 						const re = new RegExp(find, 'g');
 						text = text.replace(re, '').trim();
-						
-						// Apply appropriate class for proper 
+
+						// Apply appropriate class for proper
 						// baseline alignment
 						beneathH3 = false;
 						if (beneathP) {
@@ -187,19 +189,19 @@ class App extends React.Component {
 						return <h5 key={index}>{text}</h5>;
 					}
 					else if (text.includes("====")) {
-						
+
 						// Catch identical adjacent h tags
 						if (lastTag === "h4") {
 							deleteList.push(index - 1);
 						}
 						lastTag = "h4";
-						
+
 						// Remove old formatting and apply new h tag
 						const find = "====";
 						const re = new RegExp(find, 'g');
 						text = text.replace(re, '').trim();
-						
-						// Apply appropriate class for proper 
+
+						// Apply appropriate class for proper
 						// baseline alignment
 						beneathH3 = false;
 						if (beneathP) {
@@ -218,7 +220,7 @@ class App extends React.Component {
 						text = text.replace(re, '').trim();
 						beneathH3 = true;
 						beneathP = false;
-						return <h3 key={index}>{text}</h3>;						
+						return <h3 key={index}>{text}</h3>;
 					}
 					else if (text.includes("==")) {
 						if (lastTag === "h2") {
@@ -233,7 +235,7 @@ class App extends React.Component {
 							const linkText = "#" + text;
 							contentsTableList.push(<li key={index + text}><a href={linkText}>{text}</a></li>);
 						}
-						return <h2 id={text} key={index}>{text}</h2>;						
+						return <h2 id={text} key={index}>{text}</h2>;
 					}
 					lastTag = "p";
 					beneathP = true;
@@ -243,10 +245,10 @@ class App extends React.Component {
 					}
 					return <p key={index}>{text}</p>;
 				});
-					
+
 				// Remove text after first breakpoint
 				textArray = textArray.slice(0, breakPoints[0]);
-				
+
 				// Go back and remove headers for empty sections.
 				for (let i = 0; i < deleteList.length; i++) {
 					textArray.splice(deleteList[i], 1);
@@ -265,11 +267,11 @@ class App extends React.Component {
 				title: "Search Failed",
 				subTitle: null,
 				showContentsList: false,
-				pageText: "Could not contact Wikipedia. Please check your internet connection and try again."});	
+				pageText: "Could not contact Wikipedia. Please check your internet connection and try again."});
 		}
 		);
 	}
-	
+
 	// Return srlimit pages that match query
 	handleFormSubmit(offset, direction) {
 		// Clear any bookmarks from browser address bar
@@ -283,19 +285,19 @@ class App extends React.Component {
 				return;
 		}
 		// Decrement the offset when clicking "Previous". Make sure
-		// a previous page is available beforehand. If none is, 
+		// a previous page is available beforehand. If none is,
 		// do nothing.
 		} else if (direction < 0) {
 			if (this.state.offset - RESULTS_PER_PAGE > 0) {
 				newOffset = this.state.offset - RESULTS_PER_PAGE;
 			} else {
-				newOffset = 0;	
+				newOffset = 0;
 			}
 		}
 		this.setState({offset: newOffset});
 		this.setState({loading: true, siteMode: Mode.SEARCH});
-		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query" + 
-			"&format=json&list=search&srsearch=" + this.state.query + 
+		fetch("https://en.wikipedia.org/w/api.php?origin=*&action=query" +
+			"&format=json&list=search&srsearch=" + this.state.query +
 			"&srprop=snippet&srlimit=20&continue&sroffset=" + newOffset)
 			.then(response => response.json())
 			.catch(err => {
@@ -323,9 +325,9 @@ class App extends React.Component {
 					const cardSnippet = div.textContent || div.innerText;
 					const pageid = result.pageid;
 					return (
-						<div 
-							className="resultCard" 
-							key={index} 
+						<div
+							className="resultCard"
+							key={index}
 							onClick={() => this.handleCardClick(pageid)}
 							>
 							<h2>{cardTitle}</h2>
@@ -335,7 +337,7 @@ class App extends React.Component {
 				});
 				this.setState({
 					loading: false,
-					subTitle: "Showing " + (this.state.offset + 1) + " - " + 
+					subTitle: "Showing " + (this.state.offset + 1) + " - " +
 						Math.min(this.state.offset + RESULTS_PER_PAGE,this.state.totalHits) +
 						" out of " + this.state.totalHits,
 					title: "Search Results for '" + this.state.query + "'",
@@ -350,10 +352,10 @@ class App extends React.Component {
 				title: "Search Failed",
 				subTitle: null,
 				results: "Could not contact Wikipedia. Please check your internet connection and try again."
-			});	
+			});
 		});
 	}
-	
+
 	handleLogoClick() {
 		// Clear any bookmarks from browser address bar
 		window.history.pushState({},'','/');
@@ -373,23 +375,23 @@ class App extends React.Component {
 			totalHits: 0
 		});
 	}
-	
+
 	handleShowTableClick() {
 		this.setState((prev) => ({showContentsList: !prev.showContentsList}));
 	}
-	
+
 	render() {
-		const land = (	
+		const land = (
 							<main className="landingMain">
-								<Landing 
+								<Landing
 									query={this.state.query}
 									onFormChange={this.handleFormChange}
-									onFormSubmit={this.handleFormSubmit}		
+									onFormSubmit={this.handleFormSubmit}
 								/>
 							</main>
 						);
 		const head = (
-							<Header 
+							<Header
 								offset={this.state.offset}
 								query={this.state.query}
 								onFormChange={this.handleFormChange}
@@ -416,7 +418,7 @@ class App extends React.Component {
 							/>
 						);
 		const read =	(
-							<Page 
+							<Page
 								tableOfContents={this.state.tableOfContents}
 								title={this.state.title}
 								pageLink={this.state.pageLink}
@@ -426,6 +428,9 @@ class App extends React.Component {
 								onShowTableClick={this.handleShowTableClick}
 							/>
 						);
+		const about = (
+
+		);
 		return (
 			<div className="wrap">
 				{this.state.siteMode !== Mode.LAND && head}
@@ -433,6 +438,7 @@ class App extends React.Component {
 				{(this.state.siteMode === Mode.LAND && !this.state.loading) && land}
 				{(this.state.siteMode === Mode.SEARCH && !this.state.loading) && search}
 				{(this.state.siteMode === Mode.READ && !this.state.loading) && read}
+				{(this.state.siteMode === Mode.ABOUT && !this.state.loading) && about}
 				<footer className="siteFooter">&#169; 2019 Evan MacBride</footer>
 			</div>
 		)
