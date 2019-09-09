@@ -64,6 +64,7 @@ class App extends React.Component {
 		this.handleCardClick = this.handleCardClick.bind(this);
 		this.handleLogoClick = this.handleLogoClick.bind(this);
 		this.handleShowTableClick = this.handleShowTableClick.bind(this);
+		this.handleAboutClick = this.handleAboutClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -380,6 +381,10 @@ class App extends React.Component {
 		this.setState((prev) => ({showContentsList: !prev.showContentsList}));
 	}
 
+	handleAboutClick() {
+		this.setState({ siteMode: Mode.ABOUT });
+	}
+
 	render() {
 		const land = (
 							<main className="landingMain">
@@ -441,7 +446,7 @@ class App extends React.Component {
 				{(this.state.siteMode === Mode.ABOUT && !this.state.loading) && about}
 				<footer
 					className="siteFooter"
-					onClick={() => self.setState({ siteMode: Mode.ABOUT })}
+					onClick={handleAboutClick()}
 					>
 					&#169; 2019 Evan MacBride
 				</footer>
