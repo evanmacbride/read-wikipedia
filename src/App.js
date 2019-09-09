@@ -439,7 +439,12 @@ class App extends React.Component {
 				{(this.state.siteMode === Mode.SEARCH && !this.state.loading) && search}
 				{(this.state.siteMode === Mode.READ && !this.state.loading) && read}
 				{(this.state.siteMode === Mode.ABOUT && !this.state.loading) && about}
-				<footer className="siteFooter">&#169; 2019 Evan MacBride</footer>
+				<footer
+					className="siteFooter"
+					onClick={() => self.setState({ siteMode = Mode.ABOUT })}
+					>
+					&#169; 2019 Evan MacBride
+				</footer>
 			</div>
 		)
 	}
