@@ -429,7 +429,7 @@ class App extends React.Component {
 							/>
 						);
 		const about = (
-
+			<About />
 		);
 		return (
 			<div className="wrap">
