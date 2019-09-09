@@ -446,7 +446,7 @@ class App extends React.Component {
 				{(this.state.siteMode === Mode.ABOUT && !this.state.loading) && about}
 				<footer
 					className="siteFooter"
-					onClick={handleAboutClick()}
+					onClick={this.handleAboutClick()}
 					>
 					&#169; 2019 Evan MacBride
 				</footer>
