@@ -381,7 +381,8 @@ class App extends React.Component {
 		this.setState((prev) => ({showContentsList: !prev.showContentsList}));
 	}
 
-	handleAboutClick() {
+	handleAboutClick(event) {
+		event.preventDefault();
 		this.setState({ siteMode: Mode.ABOUT });
 	}
 
@@ -444,11 +445,11 @@ class App extends React.Component {
 				{(this.state.siteMode === Mode.SEARCH && !this.state.loading) && search}
 				{(this.state.siteMode === Mode.READ && !this.state.loading) && read}
 				{(this.state.siteMode === Mode.ABOUT && !this.state.loading) && about}
-				<footer
-					className="siteFooter"
-					onClick={this.handleAboutClick}
-					>
-					&#169; 2019 Evan MacBride
+				<footer	className="siteFooter">
+					<span className="copyrightInfo">
+						&#169; 2019 Evan MacBride
+					</span>
+					<a href="" onClick={this.handleAboutClick}>About</a>
 				</footer>
 			</div>
 		)
