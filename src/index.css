@@ -786,7 +786,7 @@ a {
 }
 
 .siteFooter a {
-	color: #2F4F1B;
+	color: inherit;
 }
 
 /* PRINT STYLES */
